@@ -1,0 +1,134 @@
+******************************************
+*** BILBIOTECA CAN PROTOCOLO J1939 FMS ***
+******************************************
+
+>VS19_ENA0250,0< //HABILITA CAN COM BAUDRATE DE 250 EM MODO ESCUTA
+
+>SSXP20< //VL06 CANBT
+// >SSXP21< //VL06 FULL + VIRCAN
+
+>VS08,07,04< //MAPEIA VELOCIDADE POR CAN (CT004)
+// >VS08,07,255< //MAPEIA VELOCIDADE POR GPS
+
+-------------------------------------
+- HORÍMETRO TOTAL [MINUTOS] (CT101) -
+-------------------------------------
+//HORÍMETRO PADRÃO: CAN (COMENTAR FILTROS PARA UTILIZAR HORÍMETRO RPM/IGN)
+>VS1900,65253,000,29,101,1,4,FFFFFFFF,0,0,1000< 
+>VS1900_MAT,x3<
+
+-------------------------------------------------------------
+- TEMPERATURA LÍQUIDO ARREFECIMENTO MOTOR	[°C]	(CT104) -
+-------------------------------------------------------------
+>VS1901,65262,000,29,104,1,1,000000FF,0,0< 
+>VS1901_MAT,-40L1H200<
+
+---------------------------------------------------------
+- EMBREAGEM 			[00-OFF|64-ON]   	    (CT125) - 
+- CRUISE CONTROL		000 - Off/Disabled		(CT124) - 
+						032 – Hold
+						064 – Accelerate
+						096 – Decelerate
+						128 – Resume
+						160 – Set
+						192 – Accel. Override
+						224 - Not available
+- FREIO ESTACIONAMENTO 	[00-OFF|04-ON]         	(CT126) - 
+- FREIO SERVIÇO        	[00-OFF|08-PRESSIONADO]	(CT127) - 
+---------------------------------------------------------
+>VS1902,65265,000,29,125,4,1,000000C0,0,0,1000,124,7,1,000000E0,0,0,1000,126,1,1,0000000C,0,0,1000,127,4,1,0000000C,0,0,1000<
+
+-----------------------------
+- VELOCIDADE [km/h] (CT109) - 
+-----------------------------
+>VS1903,09999,000,99,109,2,2,0000FFFF,0,0,1000< //VELOCIDADE BASEADA NAS RODAS
+>VS1903_MAT,/256L0H240<
+
+// -----------------------------
+// - VELOCIDADE [km/h] (CT109) - 
+// -----------------------------
+// >VS1903,65132,000,29,109,7,2,0000FFFF,0,0,1000< //VELOCIDADE DO TACÓGRAFO
+// >VS1903_MAT,/256L0H240<
+
+-------------------------
+- HODOMETRO [m] (CT102) -
+-------------------------
+>VS1904,65217,000,29,102,1,4,FFFFFFFF,0,0,1000<
+>VS1904_MAT,x5L0H42949672954< //FILTRO LIMITANDO COM O TAMANHO DO CT
+
+---------------------------------
+- ROTAÇÃO 		[RPM]	(CT103) -
+- TORQUE MOTOR 	[%]		(CT110) -
+---------------------------------
+>VS1905,61444,000,29,103,4,2,0000FFFF,0,0,1000,110,3,1,000000FF,0,0,1000<
+>VS1905_MAT,/8L0H8000,-125<
+
+------------------------------------
+- NÍVEL DE COMBUSTÍVEL [%] (CT106) -
+------------------------------------
+>VS1906,65276,000,29,106,2,1,000000FF,0,0,1000<
+>VS1906_MAT,x4/10<
+
+---------------------------------------
+- CONSUMO TOTAL [LITROS X 10] (CT107) -
+---------------------------------------
+>VS1907,65257,000,29,107,5,4,FFFFFFFF,0,0,1000<
+>VS1907_MAT,x10/2<
+
+---------------------------------
+- PRESSÃO DO ÓLEO [kPa] (CT105) -
+---------------------------------
+>VS1908,65263,000,29,105,4,1,000000FF,0,0,1000< 
+>VS1908_MAT,/4<
+
+-----------------------------------
+- PEDAL ACELERADOR   [%]  (CT100) -
+-----------------------------------
+>VS1909,61443,000,29,100,2,1,000000FF,0,0,1000< 
+>VS1909_MAT,x40/100L0H100<
+//PGN:61443 DATA: D3 FA 00 FF FF FF FF FF
+
+------------------------------
+- FREIO MOTOR   [%]  (CT112) -
+------------------------------
+>VS1910,61440,000,29,112,2,1,000000FF,0,0,1000<
+>VS1910_MAT,-125<
+
+
+*****************
+*** HORIMETRO ***
+*****************
+//HORÍMETRO PADRÃO: CAN (DESCOMENTAR TODOS OS EVENTOS PARA UTILIZAR HORÍMETRO RPM/IGN)
+
+>SSH090< //SELEÇÃO DE HORÍMETRO [0 = RPM CAN(PADRÃO)| 1 = IGNIÇÃO]
+>SUT01,QCT103,8,10,0050,9999< //MOTOR LIGADO (RPM ACIMA DE 50)
+>SUT02,QCT00,7,5,0,59< //AUXILIAR TEMPO SEGUNDOS/MINUTOS
+
+-----------------------
+- HORÍMETRO RPM (CAN) -
+-----------------------
+// >SED016 TT00++ SG09--&&UT01++&&IN07++ SGN NN {SCT00 +1}< //COSOLIDA TEMPO HORÍMETRO RPM (SEGUNDOS CT00)
+// >SED017 TT00++ SG09--&&UT02--&&IN07++ SGN NN {SCT101 +1}{SCT00 0}< //COSOLIDA TEMPO HORÍMETRO RPM (MINUTOS CT101)
+>SED016U<
+>SED017U<
+
+---------------------
+- HORÍMETRO IGNIÇÃO -
+---------------------
+// >SED018 TT00++ SG09++&&IN07++ SGN NN {SCT00 +1}< //COSOLIDA TEMPO HORÍMETRO IGNIÇÃO (SEGUNDOS CT00)
+// >SED019 TT00++ SG09++&&UT02--&&IN07++ SGN NN {SCT101 +1}{SCT00 0}< //COSOLIDA TEMPO HORÍMETRO IGNIÇÃO (MINUTOS CT101)
+>SED018U<
+>SED019U<
+
+
+***********************
+*** ODÔMETRO VIRLOC ***
+***********************
+//ODÔMETRO PADRÃO: CAN (DESCOMENTAR EVENTO 50 PARA UTILIZAR ODÔMETRO GPS)
+
+>SCT005 0< //OFFSET HODÔMETRO [metros] (CT005)
+
+>SUT26,GVS00,7,10,+0,+999< //CAPTURA ODOMETRO GPS (METROS)
+//	>GVS00,0000001092,270521184022;ID=LN61;#81A6;*2B<
+// >SED050 TT00++ IN07++ SGN NN {SCT102 VUT26+VCT05}< //COPIA PARA O CT102 O VALOR DO ODÔMETRO VIRTUAL EM METROS
+>SED050U<
