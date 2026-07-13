@@ -1,4 +1,4 @@
-:HL["/mock01-agro/_next/static/chunks/0ivypzb8gjzsq.css","style"]
+:HL["/mock01-agro/_next/static/chunks/0_8y3m39vv1w5.css","style"]
 :HL["https://unpkg.com/leaflet@1.9.4/dist/leaflet.css","style",{"crossOrigin":"","integrity":"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="}]
 :HL["https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"Egr8AtKcT3BMfa1m6Y8tF"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"J8BtD3xpWs0cpY66KyuIu"}
