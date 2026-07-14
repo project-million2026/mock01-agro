@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backup — Wiki Newtec Telemetria</title>
+<style>
+  :root{
+    --bg:#0d1117;--surface:#161b22;--surface2:#21262d;
+    --border:#30363d;--accent:#58a6ff;--green:#3fb950;
+    --yellow:#d29922;--red:#f85149;--purple:#bc8cff;
+    --text:#e6edf3;--muted:#8b949e;
+    --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+  /* HEADER */
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:20px;flex-shrink:0}
+  header h1{font-size:1.1rem;color:var(--accent);font-weight:600}
+  header p{font-size:11px;color:var(--muted);margin-top:3px}
+  .stats{display:flex;gap:12px;margin-left:auto;flex-wrap:wrap}
+  .stat{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 14px;text-align:center}
+  .stat .num{font-size:1.2rem;font-weight:700}
+  .stat .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .num-green{color:var(--green)} .num-yellow{color:var(--yellow)} .num-red{color:var(--red)}
+
+  /* LAYOUT PRINCIPAL */
+  .main{display:flex;flex:1;overflow:hidden}
+
+  /* SIDEBAR (lista de paginas) */
+  .sidebar{width:480px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden}
+  .sidebar-top{padding:12px;border-bottom:1px solid var(--border);background:var(--surface)}
+  #busca{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:7px 12px;font-size:13px;outline:none}
+  #busca:focus{border-color:var(--accent)}
+  .sidebar-scroll{overflow-y:auto;flex:1}
+  table{width:100%;border-collapse:collapse}
+  th{position:sticky;top:0;background:var(--surface);color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);z-index:1}
+  tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+  tr:hover{background:rgba(88,166,255,.07)}
+  tr.ativo{background:rgba(88,166,255,.15)!important;border-left:3px solid var(--accent)}
+  td{padding:8px 10px;vertical-align:middle}
+  .col-title{font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .col-path{color:var(--muted);font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .col-date{color:var(--muted);font-size:11px;white-space:nowrap}
+  .col-links{white-space:nowrap}
+  .col-links a{color:var(--accent);text-decoration:none;font-size:11px;margin-right:6px;padding:2px 6px;border:1px solid var(--border);border-radius:4px}
+  .col-links a:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+
+  /* BADGES */
+  .badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+  .badge-md{background:rgba(63,185,80,.12);color:var(--green);border:1px solid var(--green)}
+  .badge-html{background:rgba(210,153,34,.12);color:var(--yellow);border:1px solid var(--yellow)}
+  .badge-pw{background:rgba(188,140,255,.12);color:var(--purple);border:1px solid var(--purple)}
+
+  /* VIEWER */
+  .viewer{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#1c1c1e}
+  .viewer-header{padding:10px 20px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .viewer-title{font-size:14px;font-weight:600;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .viewer-header a{color:var(--accent);font-size:12px;text-decoration:none;padding:4px 10px;border:1px solid var(--border);border-radius:4px}
+  .viewer-header a:hover{background:var(--accent);color:#000;border-color:var(--accent)}
+  .placeholder{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--muted)}
+  .placeholder svg{opacity:.3}
+  .viewer-scroll{flex:1;overflow-y:auto;padding:32px 48px;}
+  /* Estilo do conteudo renderizado */
+  #conteudo{
+    max-width:860px;margin:0 auto;
+    color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:15px;line-height:1.7;
+  }
+  #conteudo h1,#conteudo h2,#conteudo h3,#conteudo h4{
+    color:#fff;margin:1.5em 0 .6em;font-weight:600;line-height:1.3;
+  }
+  #conteudo h1{font-size:2rem;border-bottom:1px solid #30363d;padding-bottom:.4em}
+  #conteudo h2{font-size:1.4rem;border-bottom:1px solid #21262d;padding-bottom:.3em}
+  #conteudo h3{font-size:1.15rem}
+  #conteudo p{margin:.8em 0}
+  #conteudo a{color:#58a6ff;text-decoration:none}
+  #conteudo a:hover{text-decoration:underline}
+  #conteudo img{max-width:100%;border-radius:6px;margin:.5em 0}
+  #conteudo table{border-collapse:collapse;width:100%;margin:1em 0;font-size:14px}
+  #conteudo th{background:#21262d;color:#8b949e;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;text-align:left;border:1px solid #30363d}
+  #conteudo td{padding:8px 12px;border:1px solid #30363d;vertical-align:top}
+  #conteudo tr:nth-child(even){background:#161b22}
+  #conteudo pre,#conteudo code{
+    background:#0d1117;border:1px solid #30363d;border-radius:6px;
+    font-family:'Cascadia Code','Fira Code',monospace;font-size:13px;color:#e6edf3;
+  }
+  #conteudo pre{padding:16px;overflow-x:auto;margin:1em 0}
+  #conteudo code{padding:2px 6px;border-radius:4px}
+  #conteudo pre code{padding:0;border:none;background:none}
+  #conteudo blockquote{
+    border-left:3px solid #58a6ff;margin:1em 0;
+    padding:.5em 1em;background:#161b22;border-radius:0 6px 6px 0;color:#8b949e;
+  }
+  #conteudo ul,#conteudo ol{margin:.8em 0;padding-left:1.8em}
+  #conteudo li{margin:.3em 0}
+  #conteudo hr{border:none;border-top:1px solid #30363d;margin:2em 0}
+  #conteudo .table-of-contents{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px 20px;margin:1em 0;display:inline-block;min-width:200px}
+  /* Esconde elementos de navegacao do Wiki.js que nao fazem sentido no viewer */
+  #conteudo nav,#conteudo header,#conteudo footer,
+  #conteudo .page-header,#conteudo .comments-section{display:none!important}
+
+  /* SECAO DE ERROS */
+  .err-section{padding:20px 24px 40px}
+  .err-section h2{font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+  .hint{font-weight:400;font-size:.8rem;text-transform:none;letter-spacing:0}
+  .err-table{width:100%;border-collapse:collapse;font-size:12px}
+  .err-table th,.err-table td{padding:6px 10px;border-bottom:1px solid var(--border);text-align:left}
+  .err-table td:first-child{color:var(--red)}
+
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Backup — Wiki Newtec Telemetria</h1>
+    <p>Gerado em 2026-07-02T12:41:11 &nbsp;·&nbsp; <a href="https://wiki.newtectelemetria.com.br" style="color:var(--accent)" target="_blank">https://wiki.newtectelemetria.com.br</a></p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">209</div><div class="lbl">Total</div></div>
+    <div class="stat"><div class="num num-green">151</div><div class="lbl">Salvas</div></div>
+    <div class="stat"><div class="num num-yellow">0</div><div class="lbl">Assets</div></div>
+    <div class="stat"><div class="num num-red">58</div><div class="lbl">Sem acesso</div></div>
+  </div>
+</header>
+
+<div class="main">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-top">
+      <input id="busca" type="text" placeholder="Buscar por titulo ou path..." oninput="filtrar()">
+    </div>
+    <div class="sidebar-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Titulo</th>
+            <th>Path</th>
+            <th>Data</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="corpo">
+          <tr onclick="abrirPagina('pt-br/1-wire-vl6/render.html', 'OneWire VL06')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">OneWire VL06</td>
+      <td class="col-path"><code>pt-br/1-wire-vl6</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/1-wire-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/1-wire-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/1-wire-vl8-vc8-vl12/render.html', '?️ Protocolo OneWire – VL08, VC7 e VL12')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">?️ Protocolo OneWire – VL08, VC7 e VL12</td>
+      <td class="col-path"><code>pt-br/1-wire-vl8-vc8-vl12</code></td>
+      <td class="col-date">2025-12-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/1-wire-vl8-vc8-vl12/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/1-wire-vl8-vc8-vl12" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-ConfigBas/render.html', 'Configuração Básica')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configuração Básica</td>
+      <td class="col-path"><code>pt-br/AG600-ConfigBas</code></td>
+      <td class="col-date">2026-03-13</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-ConfigBas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-ConfigBas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-Consulta/render.html', '? Consultas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Consultas</td>
+      <td class="col-path"><code>pt-br/AG600-Consulta</code></td>
+      <td class="col-date">2026-01-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-Consulta/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-Consulta" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-DMS/render.html', 'DMS')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">DMS</td>
+      <td class="col-path"><code>pt-br/AG600-DMS</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-DMS/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-DMS" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-Hardware/render.html', 'Hardware - AG600')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Hardware - AG600</td>
+      <td class="col-path"><code>pt-br/AG600-Hardware</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-Hardware/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-Hardware" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-Instalação/render.html', '? Guia de Instalação')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Guia de Instalação</td>
+      <td class="col-path"><code>pt-br/AG600-Instalação</code></td>
+      <td class="col-date">2026-01-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-Instalação/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-Instalação" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600-config-avan/render.html', 'Configuração Avançada')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configuração Avançada</td>
+      <td class="col-path"><code>pt-br/AG600-config-avan</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600-config-avan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600-config-avan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/AG600_Wialon/render.html', 'Níveis homologados na WIALON')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Níveis homologados na WIALON</td>
+      <td class="col-path"><code>pt-br/AG600_Wialon</code></td>
+      <td class="col-date">2026-02-09</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/AG600_Wialon/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/AG600_Wialon" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Aplicativo-Akcess-ble/render.html', '? Manual de Usuário - AKCESS BLE')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Manual de Usuário - AKCESS BLE</td>
+      <td class="col-path"><code>pt-br/Aplicativo-Akcess-ble</code></td>
+      <td class="col-date">2026-03-06</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Aplicativo-Akcess-ble/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Aplicativo-Akcess-ble" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Audios_MDVR/render.html', 'Embarcar Áudios Personalizados em Equipamentos MDVR/Dashcam')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Embarcar Áudios Personalizados em Equipamentos MDVR/Dashcam</td>
+      <td class="col-path"><code>pt-br/Audios_MDVR</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Audios_MDVR/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Audios_MDVR" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Configurador-VL8-Configuração-pt1/render.html', 'Guia de configuração do aplicativo - Parte 1')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Guia de configuração do aplicativo - Parte 1</td>
+      <td class="col-path"><code>pt-br/Configurador-VL8-Configuração-pt1</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Configurador-VL8-Configuração-pt1/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Configurador-VL8-Configuração-pt1" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Configurador-VL8-Configuração-pt2/render.html', 'Guia de configuração do aplicativo - Parte 2')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Guia de configuração do aplicativo - Parte 2</td>
+      <td class="col-path"><code>pt-br/Configurador-VL8-Configuração-pt2</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Configurador-VL8-Configuração-pt2/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Configurador-VL8-Configuração-pt2" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Configurador_Ruptela_Smart5/render.html', 'Configurador Smart5')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurador Smart5</td>
+      <td class="col-path"><code>pt-br/Configurador_Ruptela_Smart5</code></td>
+      <td class="col-date">2026-06-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Configurador_Ruptela_Smart5/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Configurador_Ruptela_Smart5" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Data-sheet/render.html', 'Datasheets')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Datasheets</td>
+      <td class="col-path"><code>pt-br/Data-sheet</code></td>
+      <td class="col-date">2026-05-18</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Data-sheet/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Data-sheet" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Entradas_e_saidas_eco5/render.html', 'Entradas e Saídas - ECO5')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas - ECO5</td>
+      <td class="col-path"><code>pt-br/Entradas_e_saidas_eco5</code></td>
+      <td class="col-date">2026-07-02</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Entradas_e_saidas_eco5/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Entradas_e_saidas_eco5" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Gatewaycan_Homologação_Wialon/render.html', 'GATEWAY CAN + Wialon')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">GATEWAY CAN + Wialon</td>
+      <td class="col-path"><code>pt-br/Gatewaycan_Homologação_Wialon</code></td>
+      <td class="col-date">2026-01-14</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Gatewaycan_Homologação_Wialon/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Gatewaycan_Homologação_Wialon" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Guia_homologação_smart5/render.html', 'Homologação de Equipamentos ECO5, SMART5 e PRO5LITE')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Homologação de Equipamentos ECO5, SMART5 e PRO5LITE</td>
+      <td class="col-path"><code>pt-br/Guia_homologação_smart5</code></td>
+      <td class="col-date">2026-06-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Guia_homologação_smart5/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Guia_homologação_smart5" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/M1N-ConfigBas/render.html', 'Configuração Básica')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configuração Básica</td>
+      <td class="col-path"><code>pt-br/M1N-ConfigBas</code></td>
+      <td class="col-date">2026-04-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/M1N-ConfigBas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/M1N-ConfigBas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/M1N_BSD/render.html', 'BSD')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">BSD</td>
+      <td class="col-path"><code>pt-br/M1N_BSD</code></td>
+      <td class="col-date">2026-04-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/M1N_BSD/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/M1N_BSD" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/M1N_DMS/render.html', 'DMS')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">DMS</td>
+      <td class="col-path"><code>pt-br/M1N_DMS</code></td>
+      <td class="col-date">2026-04-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/M1N_DMS/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/M1N_DMS" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/M1N_Guia_de_Instalação/render.html', '?Guia de Instalação')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">?Guia de Instalação</td>
+      <td class="col-path"><code>pt-br/M1N_Guia_de_Instalação</code></td>
+      <td class="col-date">2026-06-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/M1N_Guia_de_Instalação/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/M1N_Guia_de_Instalação" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/M1N_Hardware/render.html', 'Hardware - M1N')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Hardware - M1N</td>
+      <td class="col-path"><code>pt-br/M1N_Hardware</code></td>
+      <td class="col-date">2026-03-13</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/M1N_Hardware/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/M1N_Hardware" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/RFID-Integrado/render.html', '? Leitor RFID - VIRLOC 08 / VIRCOM 07')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Leitor RFID - VIRLOC 08 / VIRCOM 07</td>
+      <td class="col-path"><code>pt-br/RFID-Integrado</code></td>
+      <td class="col-date">2025-12-15</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/RFID-Integrado/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/RFID-Integrado" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/SMART5_preparação/render.html', 'SMART5 - Preparação do Dispositivo')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">SMART5 - Preparação do Dispositivo</td>
+      <td class="col-path"><code>pt-br/SMART5_preparação</code></td>
+      <td class="col-date">2026-04-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/SMART5_preparação/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/SMART5_preparação" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/ST-Link/render.html', 'Montagem dos cabos')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Montagem dos cabos</td>
+      <td class="col-path"><code>pt-br/ST-Link</code></td>
+      <td class="col-date">2023-10-07</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/ST-Link/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/ST-Link" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5-Cercas/render.html', 'Geocercas no Smart5')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Geocercas no Smart5</td>
+      <td class="col-path"><code>pt-br/Smart5-Cercas</code></td>
+      <td class="col-date">2026-06-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5-Cercas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5-Cercas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5-Entrada_e_Saidas/render.html', 'Smart5 Ruptela')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Smart5 Ruptela</td>
+      <td class="col-path"><code>pt-br/Smart5-Entrada_e_Saidas</code></td>
+      <td class="col-date">2026-04-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5-Entrada_e_Saidas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5-Entrada_e_Saidas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5-Hardware/render.html', 'Smart5')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Smart5</td>
+      <td class="col-path"><code>pt-br/Smart5-Hardware</code></td>
+      <td class="col-date">2026-04-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5-Hardware/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5-Hardware" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5-Instalação_no_veiculo/render.html', 'Instalação no Veiculo')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Instalação no Veiculo</td>
+      <td class="col-path"><code>pt-br/Smart5-Instalação_no_veiculo</code></td>
+      <td class="col-date">2026-04-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5-Instalação_no_veiculo/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5-Instalação_no_veiculo" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5_Configuração/render.html', 'Smart5 - Configuração')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Smart5 - Configuração</td>
+      <td class="col-path"><code>pt-br/Smart5_Configuração</code></td>
+      <td class="col-date">2026-04-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5_Configuração/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5_Configuração" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/Smart5_Rede_CAN/render.html', 'CONFIGURAÇÕES CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">CONFIGURAÇÕES CAN</td>
+      <td class="col-path"><code>pt-br/Smart5_Rede_CAN</code></td>
+      <td class="col-date">2026-06-03</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/Smart5_Rede_CAN/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/Smart5_Rede_CAN" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/VC7_Checklist/render.html', 'Telas vircom 7 (checklist)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Telas vircom 7 (checklist)</td>
+      <td class="col-path"><code>pt-br/VC7_Checklist</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/VC7_Checklist/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/VC7_Checklist" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/YUV/render.html', 'Níveis homologados na YUV')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Níveis homologados na YUV</td>
+      <td class="col-path"><code>pt-br/YUV</code></td>
+      <td class="col-date">2026-03-06</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/YUV/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/YUV" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/acelerometro-vl6/render.html', '? Orientação dos Eixos')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Orientação dos Eixos</td>
+      <td class="col-path"><code>pt-br/acelerometro-vl6</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/acelerometro-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/acelerometro-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/acelerometro-vl8-vl12-vc7/render.html', '⚙️ Configurações do acelerômetro VL08, VL12, VL15 e VC7')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Configurações do acelerômetro VL08, VL12, VL15 e VC7</td>
+      <td class="col-path"><code>pt-br/acelerometro-vl8-vl12-vc7</code></td>
+      <td class="col-date">2026-01-27</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/acelerometro-vl8-vl12-vc7/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/acelerometro-vl8-vl12-vc7" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/acoes-xvm/render.html', 'Ações')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Ações</td>
+      <td class="col-path"><code>pt-br/acoes-xvm</code></td>
+      <td class="col-date">2025-09-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/acoes-xvm/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/acoes-xvm" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/alteracoes-vc7-cam-int/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/alteracoes-vc7-cam-int</code></td>
+      <td class="col-date">2023-08-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/alteracoes-vc7-cam-int/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/alteracoes-vc7-cam-int" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/app-gatewaycan/render.html', '? Aplicativo Gateway CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Aplicativo Gateway CAN</td>
+      <td class="col-path"><code>pt-br/app-gatewaycan</code></td>
+      <td class="col-date">2026-05-13</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/app-gatewaycan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/app-gatewaycan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/attfirmwarevl6/render.html', 'Atualização de Firmware')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Atualização de Firmware</td>
+      <td class="col-path"><code>pt-br/attfirmwarevl6</code></td>
+      <td class="col-date">2023-02-22</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/attfirmwarevl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/attfirmwarevl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/atualizacao-bx-fota/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/atualizacao-bx-fota</code></td>
+      <td class="col-date">2022-11-10</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/atualizacao-bx-fota/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/atualizacao-bx-fota" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/atualizacao-fx-fota/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/atualizacao-fx-fota</code></td>
+      <td class="col-date">2023-10-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/atualizacao-fx-fota/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/atualizacao-fx-fota" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/audio-embarcado/render.html', '? Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Introdução</td>
+      <td class="col-path"><code>pt-br/audio-embarcado</code></td>
+      <td class="col-date">2025-11-27</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/audio-embarcado/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/audio-embarcado" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/bandas-vl/render.html', 'Tecnologia GSM (2G)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Tecnologia GSM (2G)</td>
+      <td class="col-path"><code>pt-br/bandas-vl</code></td>
+      <td class="col-date">2023-06-06</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/bandas-vl/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/bandas-vl" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/ble-fc41d-data/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/ble-fc41d-data</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/ble-fc41d-data/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/ble-fc41d-data" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/bluetoothvl/render.html', 'Como conectar ao Virloc via Bluetooth')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Como conectar ao Virloc via Bluetooth</td>
+      <td class="col-path"><code>pt-br/bluetoothvl</code></td>
+      <td class="col-date">2025-09-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/bluetoothvl/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/bluetoothvl" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/buffer-e-log-vl6/render.html', 'Configurações e Consultas do Buffer FIFO/LIFO e LOG')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurações e Consultas do Buffer FIFO/LIFO e LOG</td>
+      <td class="col-path"><code>pt-br/buffer-e-log-vl6</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/buffer-e-log-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/buffer-e-log-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/cercas/render.html', 'Cercas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Cercas</td>
+      <td class="col-path"><code>pt-br/cercas</code></td>
+      <td class="col-date">2025-12-15</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/cercas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/cercas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/cercas-f4/render.html', '? Configuração de região no modo base de dados')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Configuração de região no modo base de dados</td>
+      <td class="col-path"><code>pt-br/cercas-f4</code></td>
+      <td class="col-date">2026-05-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/cercas-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/cercas-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/config-pem-clientes/render.html', 'Configurações iniciais')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurações iniciais</td>
+      <td class="col-path"><code>pt-br/config-pem-clientes</code></td>
+      <td class="col-date">2023-08-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/config-pem-clientes/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/config-pem-clientes" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configsvs/render.html', 'VS08')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">VS08</td>
+      <td class="col-path"><code>pt-br/configsvs</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configsvs/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configsvs" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configuracoes-can-f4/render.html', 'Introdução às configurações CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução às configurações CAN</td>
+      <td class="col-path"><code>pt-br/configuracoes-can-f4</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configuracoes-can-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configuracoes-can-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configuracoes-conectividade/render.html', 'APNs')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">APNs</td>
+      <td class="col-path"><code>pt-br/configuracoes-conectividade</code></td>
+      <td class="col-date">2022-11-14</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configuracoes-conectividade/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configuracoes-conectividade" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configuracoes-gerais/render.html', 'Configuração de energia Periféricos VSPK')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configuração de energia Periféricos VSPK</td>
+      <td class="col-path"><code>pt-br/configuracoes-gerais</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configuracoes-gerais/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configuracoes-gerais" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configuracoes-gerais-vcone/render.html', 'Configurações Gerais')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurações Gerais</td>
+      <td class="col-path"><code>pt-br/configuracoes-gerais-vcone</code></td>
+      <td class="col-date">2023-05-31</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configuracoes-gerais-vcone/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configuracoes-gerais-vcone" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configuracoes-gerais-vl6/render.html', 'Configurações Gerais')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurações Gerais</td>
+      <td class="col-path"><code>pt-br/configuracoes-gerais-vl6</code></td>
+      <td class="col-date">2025-09-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configuracoes-gerais-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configuracoes-gerais-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configurador-systemsat/render.html', 'Esquemáticos de Instalação VL06')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Esquemáticos de Instalação VL06</td>
+      <td class="col-path"><code>pt-br/configurador-systemsat</code></td>
+      <td class="col-date">2026-04-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configurador-systemsat/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configurador-systemsat" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/configurador-vl8-instalação/render.html', 'Aplicativo Configurador VL8')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Aplicativo Configurador VL8</td>
+      <td class="col-path"><code>pt-br/configurador-vl8-instalação</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/configurador-vl8-instalação/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/configurador-vl8-instalação" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/consultas/render.html', '? Consultas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Consultas</td>
+      <td class="col-path"><code>pt-br/consultas</code></td>
+      <td class="col-date">2025-11-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/consultas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/consultas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/consultas-f4/render.html', 'Consultas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Consultas</td>
+      <td class="col-path"><code>pt-br/consultas-f4</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/consultas-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/consultas-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/consultas-vcone/render.html', 'Consultas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Consultas</td>
+      <td class="col-path"><code>pt-br/consultas-vcone</code></td>
+      <td class="col-date">2021-12-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/consultas-vcone/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/consultas-vcone" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/debugf4/render.html', 'Modos de DEBUG')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Modos de DEBUG</td>
+      <td class="col-path"><code>pt-br/debugf4</code></td>
+      <td class="col-date">2025-12-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/debugf4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/debugf4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/debugvl6/render.html', 'Modos de DEBUG')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Modos de DEBUG</td>
+      <td class="col-path"><code>pt-br/debugvl6</code></td>
+      <td class="col-date">2025-09-26</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/debugvl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/debugvl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/definicao-pulsos/render.html', 'Aplicações dos Pulsos na Telemetria Veicular:')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Aplicações dos Pulsos na Telemetria Veicular:</td>
+      <td class="col-path"><code>pt-br/definicao-pulsos</code></td>
+      <td class="col-date">2024-03-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/definicao-pulsos/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/definicao-pulsos" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/destinos/render.html', 'Destinos')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Destinos</td>
+      <td class="col-path"><code>pt-br/destinos</code></td>
+      <td class="col-date">2025-09-26</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/destinos/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/destinos" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/dicionario-xvm/render.html', 'Dicionário XVM')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Dicionário XVM</td>
+      <td class="col-path"><code>pt-br/dicionario-xvm</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/dicionario-xvm/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/dicionario-xvm" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/dicionário-telemetria/render.html', 'Dicionário de Telemetria')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Dicionário de Telemetria</td>
+      <td class="col-path"><code>pt-br/dicionário-telemetria</code></td>
+      <td class="col-date">2024-09-06</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/dicionário-telemetria/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/dicionário-telemetria" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/download-novo-xvm-terminal/render.html', 'Novo XVM Terminal')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Novo XVM Terminal</td>
+      <td class="col-path"><code>pt-br/download-novo-xvm-terminal</code></td>
+      <td class="col-date">2023-09-26</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/download-novo-xvm-terminal/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/download-novo-xvm-terminal" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/easy/render.html', 'Login')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Login</td>
+      <td class="col-path"><code>pt-br/easy</code></td>
+      <td class="col-date">2026-06-12</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/easy/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/easy" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-gatewaycan/render.html', 'Entradas e Saídas - Gateway CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas - Gateway CAN</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-gatewaycan</code></td>
+      <td class="col-date">2026-02-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-gatewaycan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-gatewaycan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vc7/render.html', 'Entradas e Saídas - VC7')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas - VC7</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vc7</code></td>
+      <td class="col-date">2026-04-01</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vc7/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vc7" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vcone/render.html', 'Entradas e saídas - VCONE 104')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e saídas - VCONE 104</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vcone</code></td>
+      <td class="col-date">2026-02-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vcone/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vcone" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vcone-108/render.html', 'Entradas e Saídas VCONE F4')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas VCONE F4</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vcone-108</code></td>
+      <td class="col-date">2026-02-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vcone-108/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vcone-108" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vl12/render.html', 'VL12 Padrão')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">VL12 Padrão</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vl12</code></td>
+      <td class="col-date">2026-04-14</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vl12/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vl12" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vl6/render.html', 'Entradas e Saídas - VL6')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas - VL6</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vl6</code></td>
+      <td class="col-date">2026-04-07</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/entradas-saidas-vl8/render.html', 'Entradas e Saídas - VL8')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Entradas e Saídas - VL8</td>
+      <td class="col-path"><code>pt-br/entradas-saidas-vl8</code></td>
+      <td class="col-date">2026-06-08</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/entradas-saidas-vl8/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/entradas-saidas-vl8" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/eventos/render.html', '? Eventos')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Eventos</td>
+      <td class="col-path"><code>pt-br/eventos</code></td>
+      <td class="col-date">2025-09-22</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/eventos/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/eventos" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/f4-LOG/render.html', 'Introdução - LOG1 e LOG2')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução - LOG1 e LOG2</td>
+      <td class="col-path"><code>pt-br/f4-LOG</code></td>
+      <td class="col-date">2026-06-10</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/f4-LOG/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/f4-LOG" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/f4-can-obd2/render.html', '? Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Introdução</td>
+      <td class="col-path"><code>pt-br/f4-can-obd2</code></td>
+      <td class="col-date">2025-12-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/f4-can-obd2/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/f4-can-obd2" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/f4-controle_de_passageiros/render.html', 'Consultas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Consultas</td>
+      <td class="col-path"><code>pt-br/f4-controle_de_passageiros</code></td>
+      <td class="col-date">2021-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/f4-controle_de_passageiros/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/f4-controle_de_passageiros" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/f4-lex/render.html', '? Introdução - LEX')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Introdução - LEX</td>
+      <td class="col-path"><code>pt-br/f4-lex</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/f4-lex/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/f4-lex" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/f4-protecao-canal/render.html', '? Proteção do Canal de Programação')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Proteção do Canal de Programação</td>
+      <td class="col-path"><code>pt-br/f4-protecao-canal</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/f4-protecao-canal/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/f4-protecao-canal" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/ferramentas/render.html', 'Softwares')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Softwares</td>
+      <td class="col-path"><code>pt-br/ferramentas</code></td>
+      <td class="col-date">2026-07-01</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/ferramentas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/ferramentas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/firmware-bx-uart/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/firmware-bx-uart</code></td>
+      <td class="col-date">2023-02-14</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/firmware-bx-uart/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/firmware-bx-uart" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/firmware_ag600/render.html', 'Atualizar Firmware')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Atualizar Firmware</td>
+      <td class="col-path"><code>pt-br/firmware_ag600</code></td>
+      <td class="col-date">2026-06-15</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/firmware_ag600/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/firmware_ag600" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/firmwares/render.html', 'Equipamentos de linha')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Equipamentos de linha</td>
+      <td class="col-path"><code>pt-br/firmwares</code></td>
+      <td class="col-date">2026-05-11</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/firmwares/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/firmwares" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/fota32/render.html', 'Abertura do canal')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Abertura do canal</td>
+      <td class="col-path"><code>pt-br/fota32</code></td>
+      <td class="col-date">2026-06-09</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/fota32/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/fota32" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/fw-update-new-xvm/render.html', 'Atualização de Firmware')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Atualização de Firmware</td>
+      <td class="col-path"><code>pt-br/fw-update-new-xvm</code></td>
+      <td class="col-date">2025-09-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/fw-update-new-xvm/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/fw-update-new-xvm" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/gatewaycan/render.html', 'Introdução - Gateway CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução - Gateway CAN</td>
+      <td class="col-path"><code>pt-br/gatewaycan</code></td>
+      <td class="col-date">2024-09-25</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/gatewaycan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/gatewaycan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/gatewaycan-guia-homologacao/render.html', 'Formato de Mensagem')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Formato de Mensagem</td>
+      <td class="col-path"><code>pt-br/gatewaycan-guia-homologacao</code></td>
+      <td class="col-date">2025-09-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/gatewaycan-guia-homologacao/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/gatewaycan-guia-homologacao" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/gfx-via-trm/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/gfx-via-trm</code></td>
+      <td class="col-date">2023-01-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/gfx-via-trm/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/gfx-via-trm" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/gurtam-wialon/render.html', 'Cadastro na Plataforma')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Cadastro na Plataforma</td>
+      <td class="col-path"><code>pt-br/gurtam-wialon</code></td>
+      <td class="col-date">2025-09-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/gurtam-wialon/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/gurtam-wialon" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/gurtam-wialon-delta2/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/gurtam-wialon-delta2</code></td>
+      <td class="col-date">2023-11-21</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/gurtam-wialon-delta2/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/gurtam-wialon-delta2" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/hardware-gatewaycan/render.html', '⚙️ Hardware - GATEWAY CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - GATEWAY CAN</td>
+      <td class="col-path"><code>pt-br/hardware-gatewaycan</code></td>
+      <td class="col-date">2026-02-06</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/hardware-gatewaycan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/hardware-gatewaycan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/hardware-vl6/render.html', '⚙️ Hardware - VIRLOC 06')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - VIRLOC 06</td>
+      <td class="col-path"><code>pt-br/hardware-vl6</code></td>
+      <td class="col-date">2025-09-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/hardware-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/hardware-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/hardware_eco5/render.html', 'ECO5')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">ECO5</td>
+      <td class="col-path"><code>pt-br/hardware_eco5</code></td>
+      <td class="col-date">2026-07-02</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/hardware_eco5/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/hardware_eco5" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/home/render.html', 'Seja Bem-vindo à WIKI Akroz Telematics')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Seja Bem-vindo à WIKI Akroz Telematics</td>
+      <td class="col-path"><code>pt-br/home</code></td>
+      <td class="col-date">2026-06-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/home/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/home" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/homologacaoflespi/render.html', 'Níveis homologados na FLESPI')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Níveis homologados na FLESPI</td>
+      <td class="col-path"><code>pt-br/homologacaoflespi</code></td>
+      <td class="col-date">2025-12-15</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/homologacaoflespi/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/homologacaoflespi" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/homologacaossx/render.html', 'Formato da Mensagem')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Formato da Mensagem</td>
+      <td class="col-path"><code>pt-br/homologacaossx</code></td>
+      <td class="col-date">2026-02-10</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/homologacaossx/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/homologacaossx" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/homologação-REDGPS/render.html', 'Níveis homologados na REDGPS')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Níveis homologados na REDGPS</td>
+      <td class="col-path"><code>pt-br/homologação-REDGPS</code></td>
+      <td class="col-date">2026-01-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/homologação-REDGPS/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/homologação-REDGPS" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/identificação-2g-4g/render.html', 'Identificação de módulos 2G e 4G/2G')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Identificação de módulos 2G e 4G/2G</td>
+      <td class="col-path"><code>pt-br/identificação-2g-4g</code></td>
+      <td class="col-date">2025-12-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/identificação-2g-4g/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/identificação-2g-4g" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/info-anatel/render.html', 'AG600')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">AG600</td>
+      <td class="col-path"><code>pt-br/info-anatel</code></td>
+      <td class="col-date">2026-05-28</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/info-anatel/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/info-anatel" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/instalacaoxmv/render.html', 'XVM Terminal')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">XVM Terminal</td>
+      <td class="col-path"><code>pt-br/instalacaoxmv</code></td>
+      <td class="col-date">2023-10-09</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/instalacaoxmv/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/instalacaoxmv" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/integracao-JC/render.html', '? GatewayCAN + JC450')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? GatewayCAN + JC450</td>
+      <td class="col-path"><code>pt-br/integracao-JC</code></td>
+      <td class="col-date">2025-09-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/integracao-JC/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/integracao-JC" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/ip-terminal/render.html', 'Realizar Consultas no IP Terminal')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Realizar Consultas no IP Terminal</td>
+      <td class="col-path"><code>pt-br/ip-terminal</code></td>
+      <td class="col-date">2024-03-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/ip-terminal/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/ip-terminal" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/jc170/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/jc170</code></td>
+      <td class="col-date">2023-07-31</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/jc170/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/jc170" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/lib-can/render.html', 'Bibliotecas CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Bibliotecas CAN</td>
+      <td class="col-path"><code>pt-br/lib-can</code></td>
+      <td class="col-date">2026-06-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/lib-can/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/lib-can" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/lib-can2/render.html', 'Bibliotecas CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Bibliotecas CAN</td>
+      <td class="col-path"><code>pt-br/lib-can2</code></td>
+      <td class="col-date">2025-01-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/lib-can2/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/lib-can2" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/lora-mesh/render.html', 'Introdução - Rede V# Mesh')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução - Rede V# Mesh</td>
+      <td class="col-path"><code>pt-br/lora-mesh</code></td>
+      <td class="col-date">2026-06-12</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/lora-mesh/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/lora-mesh" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/m1n-Config-avan/render.html', 'Configuração Avançada')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configuração Avançada</td>
+      <td class="col-path"><code>pt-br/m1n-Config-avan</code></td>
+      <td class="col-date">2026-03-18</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/m1n-Config-avan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/m1n-Config-avan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/modo-sleep-vl8-vl12-vc7/render.html', '? Modo KO / Sleep (Baixo Consumo)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Modo KO / Sleep (Baixo Consumo)</td>
+      <td class="col-path"><code>pt-br/modo-sleep-vl8-vl12-vc7</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/modo-sleep-vl8-vl12-vc7/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/modo-sleep-vl8-vl12-vc7" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/notas-de-release-f4/render.html', 'Novas Versões de Firmware - VL08, VL12 e VC07')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Novas Versões de Firmware - VL08, VL12 e VC07</td>
+      <td class="col-path"><code>pt-br/notas-de-release-f4</code></td>
+      <td class="col-date">2026-05-08</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/notas-de-release-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/notas-de-release-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/notas-de-release-vl6/render.html', '? Novas Versões de Firmware - VIRLOC 06')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Novas Versões de Firmware - VIRLOC 06</td>
+      <td class="col-path"><code>pt-br/notas-de-release-vl6</code></td>
+      <td class="col-date">2025-11-13</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/notas-de-release-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/notas-de-release-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/novo-bt-fc41d/render.html', '? Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Introdução</td>
+      <td class="col-path"><code>pt-br/novo-bt-fc41d</code></td>
+      <td class="col-date">2025-12-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/novo-bt-fc41d/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/novo-bt-fc41d" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/politica-comercial/render.html', 'Política Comercial')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Política Comercial</td>
+      <td class="col-path"><code>pt-br/politica-comercial</code></td>
+      <td class="col-date">2022-05-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/politica-comercial/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/politica-comercial" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/primeiros_passos/render.html', 'Apresentação WIKI')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Apresentação WIKI</td>
+      <td class="col-path"><code>pt-br/primeiros_passos</code></td>
+      <td class="col-date">2026-06-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/primeiros_passos/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/primeiros_passos" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/propriedades-firmware-gatewaycan/render.html', 'Propriedades do Firmware Gateway CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Propriedades do Firmware Gateway CAN</td>
+      <td class="col-path"><code>pt-br/propriedades-firmware-gatewaycan</code></td>
+      <td class="col-date">2024-11-05</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/propriedades-firmware-gatewaycan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/propriedades-firmware-gatewaycan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/propriedades-firmware-vcone/render.html', 'Propriedades de firmware - VCONE')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Propriedades de firmware - VCONE</td>
+      <td class="col-path"><code>pt-br/propriedades-firmware-vcone</code></td>
+      <td class="col-date">2022-03-11</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/propriedades-firmware-vcone/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/propriedades-firmware-vcone" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/propriedades-firmware-vl6/render.html', 'Propriedades do Firmware VL6')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Propriedades do Firmware VL6</td>
+      <td class="col-path"><code>pt-br/propriedades-firmware-vl6</code></td>
+      <td class="col-date">2025-09-24</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/propriedades-firmware-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/propriedades-firmware-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/propriedades-firmware-vl8-vl12-vc7/render.html', 'Propriedades do Firmware VL08 | VL12 | VC07 | VCONE 108')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Propriedades do Firmware VL08 | VL12 | VC07 | VCONE 108</td>
+      <td class="col-path"><code>pt-br/propriedades-firmware-vl8-vl12-vc7</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/propriedades-firmware-vl8-vl12-vc7/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/propriedades-firmware-vl8-vl12-vc7" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/protocolo-xvm/render.html', 'PROTOCOLO XVM')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">PROTOCOLO XVM</td>
+      <td class="col-path"><code>pt-br/protocolo-xvm</code></td>
+      <td class="col-date">2026-06-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/protocolo-xvm/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/protocolo-xvm" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/pulsos-f4/render.html', '? Leitura de Pulsos - VL8, VC7 e VL12')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Leitura de Pulsos - VL8, VC7 e VL12</td>
+      <td class="col-path"><code>pt-br/pulsos-f4</code></td>
+      <td class="col-date">2025-12-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/pulsos-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/pulsos-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/pulsos-vl6/render.html', 'Leitura de Pulsos - VL6 (Full)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Leitura de Pulsos - VL6 (Full)</td>
+      <td class="col-path"><code>pt-br/pulsos-vl6</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/pulsos-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/pulsos-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/quectel-fc41/render.html', 'Comandos ATs')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Comandos ATs</td>
+      <td class="col-path"><code>pt-br/quectel-fc41</code></td>
+      <td class="col-date">2025-03-21</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/quectel-fc41/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/quectel-fc41" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/reconhecimento_facial/render.html', 'Reconhecimento Facial')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Reconhecimento Facial</td>
+      <td class="col-path"><code>pt-br/reconhecimento_facial</code></td>
+      <td class="col-date">2026-06-10</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/reconhecimento_facial/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/reconhecimento_facial" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/rede-can/render.html', 'Principais aspectos do barramento CAN (CAN bus)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Principais aspectos do barramento CAN (CAN bus)</td>
+      <td class="col-path"><code>pt-br/rede-can</code></td>
+      <td class="col-date">2025-03-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/rede-can/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/rede-can" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/rede-can-dtcs/render.html', '⚙️ Introdução - Código de Falhas (DTCs)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Introdução - Código de Falhas (DTCs)</td>
+      <td class="col-path"><code>pt-br/rede-can-dtcs</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/rede-can-dtcs/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/rede-can-dtcs" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/rede-can-vl6/render.html', 'Configurações CAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Configurações CAN</td>
+      <td class="col-path"><code>pt-br/rede-can-vl6</code></td>
+      <td class="col-date">2025-11-21</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/rede-can-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/rede-can-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/reportes/render.html', 'Formatos definidos')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Formatos definidos</td>
+      <td class="col-path"><code>pt-br/reportes</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/reportes/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/reportes" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/rfidvl6/render.html', '? Integração com periféricos - Porta Serial TTL')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Integração com periféricos - Porta Serial TTL</td>
+      <td class="col-path"><code>pt-br/rfidvl6</code></td>
+      <td class="col-date">2026-04-16</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/rfidvl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/rfidvl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/script/render.html', 'Embarcar script')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Embarcar script</td>
+      <td class="col-path"><code>pt-br/script</code></td>
+      <td class="col-date">2025-09-19</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/script/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/script" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/script-base-padrao/render.html', 'Script base VL06 CAN BT')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Script base VL06 CAN BT</td>
+      <td class="col-path"><code>pt-br/script-base-padrao</code></td>
+      <td class="col-date">2022-05-10</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/script-base-padrao/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/script-base-padrao" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/scripts-e-exemplos/render.html', 'Scripts e Bibliotecas CAN – Linha Virloc')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Scripts e Bibliotecas CAN – Linha Virloc</td>
+      <td class="col-path"><code>pt-br/scripts-e-exemplos</code></td>
+      <td class="col-date">2026-06-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/scripts-e-exemplos/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/scripts-e-exemplos" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/serial-f4/render.html', '?Integração com periféricos - Configuração da Porta serial')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">?Integração com periféricos - Configuração da Porta serial</td>
+      <td class="col-path"><code>pt-br/serial-f4</code></td>
+      <td class="col-date">2026-01-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/serial-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/serial-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/sleepvl6/render.html', '? Configurações de Sleep Virloc 6')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Configurações de Sleep Virloc 6</td>
+      <td class="col-path"><code>pt-br/sleepvl6</code></td>
+      <td class="col-date">2025-09-26</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/sleepvl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/sleepvl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/sms-f4/render.html', 'Envio de Comandos via SMS')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Envio de Comandos via SMS</td>
+      <td class="col-path"><code>pt-br/sms-f4</code></td>
+      <td class="col-date">2025-11-27</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/sms-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/sms-f4" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/sms-vl6/render.html', 'Envio de Comandos via SMS')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Envio de Comandos via SMS</td>
+      <td class="col-path"><code>pt-br/sms-vl6</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/sms-vl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/sms-vl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/variaveisvl6/render.html', '? Contadores Numéricos - CTs')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Contadores Numéricos - CTs</td>
+      <td class="col-path"><code>pt-br/variaveisvl6</code></td>
+      <td class="col-date">2026-06-25</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/variaveisvl6/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/variaveisvl6" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vc7/render.html', '⚙️ Hardware - VIRCOM 07')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - VIRCOM 07</td>
+      <td class="col-path"><code>pt-br/vc7</code></td>
+      <td class="col-date">2025-09-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vc7/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vc7" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vc7-telas/render.html', 'Introdução')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Introdução</td>
+      <td class="col-path"><code>pt-br/vc7-telas</code></td>
+      <td class="col-date">2025-10-21</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vc7-telas/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vc7-telas" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vcone108/render.html', '⚙️ Hardware - VCone 108 (F4)')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - VCone 108 (F4)</td>
+      <td class="col-path"><code>pt-br/vcone108</code></td>
+      <td class="col-date">2025-09-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vcone108/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vcone108" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vircan/render.html', 'VirCAN')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">VirCAN</td>
+      <td class="col-path"><code>pt-br/vircan</code></td>
+      <td class="col-date">2023-03-22</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vircan/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vircan" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl06-guia-homologacao/render.html', 'Formato da Mensagem')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Formato da Mensagem</td>
+      <td class="col-path"><code>pt-br/vl06-guia-homologacao</code></td>
+      <td class="col-date">2026-06-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl06-guia-homologacao/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl06-guia-homologacao" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl06-guia-homologacao2/render.html', '1. Formato da Mensagem')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">1. Formato da Mensagem</td>
+      <td class="col-path"><code>pt-br/vl06-guia-homologacao2</code></td>
+      <td class="col-date">2024-09-20</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl06-guia-homologacao2/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl06-guia-homologacao2" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl08-guia-homologacao/render.html', 'Formato da Mensagem')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Formato da Mensagem</td>
+      <td class="col-path"><code>pt-br/vl08-guia-homologacao</code></td>
+      <td class="col-date">2025-09-23</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl08-guia-homologacao/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl08-guia-homologacao" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl12/render.html', '⚙️ Hardware - VL12')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - VL12</td>
+      <td class="col-path"><code>pt-br/vl12</code></td>
+      <td class="col-date">2025-09-30</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl12/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl12" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl6-disparadores-condicionais/render.html', '? Disparadores de Entradas Digitais')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Disparadores de Entradas Digitais</td>
+      <td class="col-path"><code>pt-br/vl6-disparadores-condicionais</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl6-disparadores-condicionais/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl6-disparadores-condicionais" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl6-globalstar/render.html', '? Conexões Físicas')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Conexões Físicas</td>
+      <td class="col-path"><code>pt-br/vl6-globalstar</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl6-globalstar/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl6-globalstar" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl6-protecao-canal/render.html', 'Proteção do Canal de Programação')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">Proteção do Canal de Programação</td>
+      <td class="col-path"><code>pt-br/vl6-protecao-canal</code></td>
+      <td class="col-date">2025-09-29</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl6-protecao-canal/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl6-protecao-canal" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/vl8/render.html', '⚙️ Hardware - VIRLOC 08')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">⚙️ Hardware - VIRLOC 08</td>
+      <td class="col-path"><code>pt-br/vl8</code></td>
+      <td class="col-date">2026-04-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/vl8/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/vl8" target="_blank">Original</a>
+      </td>
+    </tr><tr onclick="abrirPagina('pt-br/wifi-f4/render.html', '? Wi-Fi')" title="Clique para visualizar">
+      <td><span class="badge badge-html">HTML</span></td>
+      <td class="col-title">? Wi-Fi</td>
+      <td class="col-path"><code>pt-br/wifi-f4</code></td>
+      <td class="col-date">2026-05-17</td>
+      <td class="col-links" onclick="event.stopPropagation()">
+        <a href="pt-br/wifi-f4/render.html" target="_blank">Abrir</a>
+        <a href="https://wiki.newtectelemetria.com.br/pt-br/wifi-f4" target="_blank">Original</a>
+      </td>
+    </tr>
+        </tbody>
+      </table>
+      
+    <section class="err-section">
+      <h2>Paginas inacessiveis (58) <span class="hint">— Requerem conta com mais permissoes</span></h2>
+      <table class="err-table">
+        <thead><tr><th>Path</th><th>Motivo</th></tr></thead>
+        <tbody><tr><td><code>pt-br/BR61LQ08_Fev22</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/registro-de-ticket</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/boas-vindas</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/USB</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/versoeshardwarevt</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/Procedimento</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/BR61LQ07_Fev22</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/testedemo</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/versoesfirmwareproducao</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/versoespemvt</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/crm-odoo</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/videos_cases_demos</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/firmwareproducao</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/parafusos-vl6-vl8</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/BR61LQ09_Mai22</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/alteracao-mf-vlq14-vl08</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl8-cabos</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/novo-xvm-terminal</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/alteracao-vc07-83-38</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/BR61LQ11_09WDS_set22</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/STLink-montagem-atualizacao</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/cabo-obdll</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/VL8-BR63-20-out22</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/logs-pem</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl6-testes-memoria</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/f4-logicas-exemplo</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/montagem-vl06-can-ins</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/sierra-bx3105</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/config-pem-nt</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/producao-vcone</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/treinamentos-conteudo</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl12-lote-especial</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/sniffer</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/mvp-gw-can</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl8-pem-cable-v4</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl6-micro-colagem</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vc7-pem</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/alteracoes-vcone-109-02</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vc7-cam-int</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vlq-test-points</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/anatel-homologacoes</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/VC7_L86BG_84_43</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/montagem-vl7-70-02</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/USB-CREARE</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vl70_02_06_2024</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/gateway-can</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/criptografia-clib</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/Limpeza-de-SN</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/SVA-CREARE</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/vot-out1-telefonica</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/SVA-PAE</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/alteração_L485_F091</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/montagem_vl12_full</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/anotacoes-engenharia</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/instrucoes_de_trabalho</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/teste-vcone-sem-pem</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/Configurador-VL8</code></td><td>403 - nao autorizado</td></tr><tr><td><code>pt-br/AG600_ADAS</code></td><td>403 - nao autorizado</td></tr></tbody>
+      </table>
+    </section>
+    </div>
+  </div>
+
+  <!-- VIEWER -->
+  <div class="viewer" id="viewer">
+    <div class="placeholder" id="placeholder">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      <p>Selecione uma pagina na lista para visualizar</p>
+    </div>
+    <div class="viewer-header hidden" id="viewer-header">
+      <span class="viewer-title" id="viewer-title"></span>
+      <a id="viewer-link" href="#" target="_blank">Abrir em nova aba</a>
+    </div>
+    <div class="viewer-scroll hidden" id="viewer-scroll">
+      <div id="conteudo"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let linhaAtiva = null;
+
+async function abrirPagina(path, title) {
+  if (!path) return;
+
+  const ph       = document.getElementById("placeholder");
+  const header   = document.getElementById("viewer-header");
+  const scroll   = document.getElementById("viewer-scroll");
+  const conteudo = document.getElementById("conteudo");
+  const tituloEl = document.getElementById("viewer-title");
+  const link     = document.getElementById("viewer-link");
+
+  // Marca linha ativa
+  if (linhaAtiva) linhaAtiva.classList.remove("ativo");
+  linhaAtiva = event.currentTarget;
+  linhaAtiva.classList.add("ativo");
+
+  // Mostra carregando
+  ph.classList.add("hidden");
+  header.classList.remove("hidden");
+  scroll.classList.remove("hidden");
+  tituloEl.textContent = title;
+  link.href = path;
+  conteudo.innerHTML = '<p style="color:#8b949e">Carregando...</p>';
+  scroll.scrollTop = 0;
+
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const html = await resp.text();
+
+    // Extrai apenas o conteudo util (sem scripts e sem head)
+    const parser = new DOMParser();
+    const doc    = parser.parseFromString(html, 'text/html');
+
+    // Remove scripts para seguranca
+    doc.querySelectorAll('script, style, link[rel="stylesheet"]').forEach(el => el.remove());
+
+    // Tenta extrair area de conteudo principal
+    const seletores = [
+      'article.contents', 'div.contents', '.page-contents',
+      'main article', 'main', 'body'
+    ];
+    let area = null;
+    for (const sel of seletores) {
+      area = doc.querySelector(sel);
+      if (area && area.innerHTML.trim().length > 80) break;
+    }
+
+    conteudo.innerHTML = area ? area.innerHTML : html;
+
+    // Corrige links relativos nas imagens e media
+    conteudo.querySelectorAll('img[src], source[src], video[src]').forEach(img => {
+      let src = img.getAttribute('src');
+      if (src) {
+        // Se for URL absoluta do proprio wiki, extrai o path
+        if (src.startsWith('https://wiki.newtectelemetria.com.br/')) {
+           src = src.replace('https://wiki.newtectelemetria.com.br', '');
+        }
+        
+        if (!src.startsWith('http') && !src.startsWith('data:')) {
+          if (src.startsWith('/')) {
+            // Imagens que estavam na raiz do Wiki ou absolutas
+            // foram baixadas para a pasta assets.
+            img.src = '/assets' + decodeURIComponent(src);
+          } else {
+            // Relativo ao path da pagina
+            const base = path.substring(0, path.lastIndexOf('/') + 1);
+            img.src = base + decodeURIComponent(src);
+          }
+        }
+      }
+    });
+
+  } catch(e) {
+    conteudo.innerHTML = '<p style="color:#f85149">Erro ao carregar: ' + e.message + '</p>';
+  }
+}
+
+function filtrar() {
+  const q = document.getElementById("busca").value.toLowerCase().trim();
+  document.querySelectorAll("#corpo tr").forEach(tr => {
+    const txt = tr.textContent.toLowerCase();
+    tr.classList.toggle("hidden", q !== "" && !txt.includes(q));
+  });
+}
+
+// Atalho de teclado: Escape limpa busca
+document.getElementById("busca").addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    e.target.value = "";
+    filtrar();
+  }
+});
+</script>
+</body>
+</html>
