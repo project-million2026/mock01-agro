@@ -1,0 +1,1603 @@
+{
+  "wiki_url": "https://wiki.newtectelemetria.com.br",
+  "backup_date": "2026-07-02T12:41:11",
+  "total_pages": 209,
+  "pages_saved": 151,
+  "pages_failed": 58,
+  "total_assets": 0,
+  "pages": [
+    {
+      "id": 1,
+      "title": "Seja Bem-vindo à WIKI Telemetria",
+      "path": "home",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-05T12:17:25.207Z",
+      "source": "playwright",
+      "dir": "pt-br\\home"
+    },
+    {
+      "id": 2,
+      "title": "PROTOCOLO XVM",
+      "path": "protocolo-xvm",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-29T11:41:02.844Z",
+      "source": "playwright",
+      "dir": "pt-br\\protocolo-xvm"
+    },
+    {
+      "id": 3,
+      "title": "? Consultas",
+      "path": "consultas",
+      "locale": "pt-br",
+      "updatedAt": "2025-11-19T17:14:32.736Z",
+      "source": "playwright",
+      "dir": "pt-br\\consultas"
+    },
+    {
+      "id": 4,
+      "title": "Entradas e Saídas - VL6",
+      "path": "entradas-saidas-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-07T15:22:26.014Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vl6"
+    },
+    {
+      "id": 5,
+      "title": "? Eventos",
+      "path": "eventos",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-22T11:57:44.639Z",
+      "source": "playwright",
+      "dir": "pt-br\\eventos"
+    },
+    {
+      "id": 6,
+      "title": "⚙️ Hardware - VIRLOC 08",
+      "path": "vl8",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-17T15:12:01.875Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl8"
+    },
+    {
+      "id": 7,
+      "title": "Propriedades do Firmware VL08 | VL12 | VC07 | VCONE 108",
+      "path": "propriedades-firmware-vl8-vl12-vc7",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:14:25.594Z",
+      "source": "playwright",
+      "dir": "pt-br\\propriedades-firmware-vl8-vl12-vc7"
+    },
+    {
+      "id": 8,
+      "title": "Configuração de energia Periféricos VSPK",
+      "path": "configuracoes-gerais",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:36:29.983Z",
+      "source": "playwright",
+      "dir": "pt-br\\configuracoes-gerais"
+    },
+    {
+      "id": 9,
+      "title": "Configurações Gerais",
+      "path": "configuracoes-gerais-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-24T20:49:25.472Z",
+      "source": "playwright",
+      "dir": "pt-br\\configuracoes-gerais-vl6"
+    },
+    {
+      "id": 10,
+      "title": "⚙️ Hardware - VIRLOC 06",
+      "path": "hardware-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-30T13:38:54.847Z",
+      "source": "playwright",
+      "dir": "pt-br\\hardware-vl6"
+    },
+    {
+      "id": 11,
+      "title": "? Disparadores de Entradas Digitais",
+      "path": "vl6-disparadores-condicionais",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:11:07.283Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl6-disparadores-condicionais"
+    },
+    {
+      "id": 12,
+      "title": "? Modo KO / Sleep (Baixo Consumo)",
+      "path": "modo-sleep-vl8-vl12-vc7",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:16:59.287Z",
+      "source": "playwright",
+      "dir": "pt-br\\modo-sleep-vl8-vl12-vc7"
+    },
+    {
+      "id": 13,
+      "title": "? Leitor RFID - VIRLOC 08 / VIRCOM 07",
+      "path": "RFID-Integrado",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-15T16:54:28.260Z",
+      "source": "playwright",
+      "dir": "pt-br\\RFID-Integrado"
+    },
+    {
+      "id": 14,
+      "title": "Softwares",
+      "path": "ferramentas",
+      "locale": "pt-br",
+      "updatedAt": "2026-07-01T19:34:05.643Z",
+      "source": "playwright",
+      "dir": "pt-br\\ferramentas"
+    },
+    {
+      "id": 16,
+      "title": "Introdução - Rede V# Mesh",
+      "path": "lora-mesh",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-12T12:48:46.652Z",
+      "source": "playwright",
+      "dir": "pt-br\\lora-mesh"
+    },
+    {
+      "id": 17,
+      "title": "? Introdução",
+      "path": "audio-embarcado",
+      "locale": "pt-br",
+      "updatedAt": "2025-11-27T21:06:06.293Z",
+      "source": "playwright",
+      "dir": "pt-br\\audio-embarcado"
+    },
+    {
+      "id": 18,
+      "title": "? Introdução",
+      "path": "f4-can-obd2",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-19T12:23:27.671Z",
+      "source": "playwright",
+      "dir": "pt-br\\f4-can-obd2"
+    },
+    {
+      "id": 19,
+      "title": "Introdução às configurações CAN",
+      "path": "configuracoes-can-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T04:03:11.400Z",
+      "source": "playwright",
+      "dir": "pt-br\\configuracoes-can-f4"
+    },
+    {
+      "id": 20,
+      "title": "Cercas",
+      "path": "cercas",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-15T17:55:12.239Z",
+      "source": "playwright",
+      "dir": "pt-br\\cercas"
+    },
+    {
+      "id": 21,
+      "title": "Destinos",
+      "path": "destinos",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-26T16:42:25.274Z",
+      "source": "playwright",
+      "dir": "pt-br\\destinos"
+    },
+    {
+      "id": 22,
+      "title": "Formatos definidos",
+      "path": "reportes",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:26:42.293Z",
+      "source": "playwright",
+      "dir": "pt-br\\reportes"
+    },
+    {
+      "id": 23,
+      "title": "Modos de DEBUG",
+      "path": "debugvl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-26T12:32:43.458Z",
+      "source": "playwright",
+      "dir": "pt-br\\debugvl6"
+    },
+    {
+      "id": 24,
+      "title": "? Configurações de Sleep Virloc 6",
+      "path": "sleepvl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-26T11:57:43.390Z",
+      "source": "playwright",
+      "dir": "pt-br\\sleepvl6"
+    },
+    {
+      "id": 25,
+      "title": "Consultas",
+      "path": "f4-controle_de_passageiros",
+      "locale": "pt-br",
+      "updatedAt": "2021-05-17T21:31:50.677Z",
+      "source": "playwright",
+      "dir": "pt-br\\f4-controle_de_passageiros"
+    },
+    {
+      "id": 26,
+      "title": "Consultas",
+      "path": "consultas-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T04:16:39.804Z",
+      "source": "playwright",
+      "dir": "pt-br\\consultas-f4"
+    },
+    {
+      "id": 27,
+      "title": "? Contadores Numéricos - CTs",
+      "path": "variaveisvl6",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-25T01:44:35.533Z",
+      "source": "playwright",
+      "dir": "pt-br\\variaveisvl6"
+    },
+    {
+      "id": 28,
+      "title": "? Integração com periféricos - Porta Serial TTL",
+      "path": "rfidvl6",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-16T16:52:46.878Z",
+      "source": "playwright",
+      "dir": "pt-br\\rfidvl6"
+    },
+    {
+      "id": 29,
+      "title": "Introdução - LOG1 e LOG2",
+      "path": "f4-LOG",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-10T15:20:45.638Z",
+      "source": "playwright",
+      "dir": "pt-br\\f4-LOG"
+    },
+    {
+      "id": 30,
+      "title": "Propriedades do Firmware VL6",
+      "path": "propriedades-firmware-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-24T16:50:21.231Z",
+      "source": "playwright",
+      "dir": "pt-br\\propriedades-firmware-vl6"
+    },
+    {
+      "id": 32,
+      "title": "? Novas Versões de Firmware - VIRLOC 06",
+      "path": "notas-de-release-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-11-13T20:46:21.150Z",
+      "source": "playwright",
+      "dir": "pt-br\\notas-de-release-vl6"
+    },
+    {
+      "id": 33,
+      "title": "? Orientação dos Eixos",
+      "path": "acelerometro-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T12:34:28.889Z",
+      "source": "playwright",
+      "dir": "pt-br\\acelerometro-vl6"
+    },
+    {
+      "id": 34,
+      "title": "Leitura de Pulsos - VL6 (Full)",
+      "path": "pulsos-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T16:20:54.201Z",
+      "source": "playwright",
+      "dir": "pt-br\\pulsos-vl6"
+    },
+    {
+      "id": 35,
+      "title": "Entradas e Saídas - VL8",
+      "path": "entradas-saidas-vl8",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-08T17:01:40.389Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vl8"
+    },
+    {
+      "id": 36,
+      "title": "Envio de Comandos via SMS",
+      "path": "sms-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T18:10:18.176Z",
+      "source": "playwright",
+      "dir": "pt-br\\sms-vl6"
+    },
+    {
+      "id": 37,
+      "title": "Configurações e Consultas do Buffer FIFO/LIFO e LOG",
+      "path": "buffer-e-log-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T19:01:17.090Z",
+      "source": "playwright",
+      "dir": "pt-br\\buffer-e-log-vl6"
+    },
+    {
+      "id": 38,
+      "title": "XVM Terminal",
+      "path": "instalacaoxmv",
+      "locale": "pt-br",
+      "updatedAt": "2023-10-09T12:58:06.579Z",
+      "source": "playwright",
+      "dir": "pt-br\\instalacaoxmv"
+    },
+    {
+      "id": 39,
+      "title": "Atualização de Firmware",
+      "path": "attfirmwarevl6",
+      "locale": "pt-br",
+      "updatedAt": "2023-02-22T13:53:24.936Z",
+      "source": "playwright",
+      "dir": "pt-br\\attfirmwarevl6"
+    },
+    {
+      "id": 40,
+      "title": "Como conectar ao Virloc via Bluetooth",
+      "path": "bluetoothvl",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-23T16:48:20.162Z",
+      "source": "playwright",
+      "dir": "pt-br\\bluetoothvl"
+    },
+    {
+      "id": 41,
+      "title": "Configurações CAN",
+      "path": "rede-can-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-11-21T16:46:48.042Z",
+      "source": "playwright",
+      "dir": "pt-br\\rede-can-vl6"
+    },
+    {
+      "id": 42,
+      "title": "Envio de Comandos via SMS",
+      "path": "sms-f4",
+      "locale": "pt-br",
+      "updatedAt": "2025-11-27T13:53:56.677Z",
+      "source": "playwright",
+      "dir": "pt-br\\sms-f4"
+    },
+    {
+      "id": 43,
+      "title": "? Wi-Fi",
+      "path": "wifi-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:19:14.894Z",
+      "source": "playwright",
+      "dir": "pt-br\\wifi-f4"
+    },
+    {
+      "id": 44,
+      "title": "Modos de DEBUG",
+      "path": "debugf4",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-19T13:35:09.828Z",
+      "source": "playwright",
+      "dir": "pt-br\\debugf4"
+    },
+    {
+      "id": 45,
+      "title": "Configurações Gerais",
+      "path": "configuracoes-gerais-vcone",
+      "locale": "pt-br",
+      "updatedAt": "2023-05-31T19:23:36.301Z",
+      "source": "playwright",
+      "dir": "pt-br\\configuracoes-gerais-vcone"
+    },
+    {
+      "id": 46,
+      "title": "? Introdução - LEX",
+      "path": "f4-lex",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:23:09.483Z",
+      "source": "playwright",
+      "dir": "pt-br\\f4-lex"
+    },
+    {
+      "id": 47,
+      "title": "Entradas e saídas - VCONE 104",
+      "path": "entradas-saidas-vcone",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-19T16:08:11.532Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vcone"
+    },
+    {
+      "id": 48,
+      "title": "Consultas",
+      "path": "consultas-vcone",
+      "locale": "pt-br",
+      "updatedAt": "2021-12-20T19:03:48.247Z",
+      "source": "playwright",
+      "dir": "pt-br\\consultas-vcone"
+    },
+    {
+      "id": 49,
+      "title": "? Configuração de região no modo base de dados",
+      "path": "cercas-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-24T16:17:17.597Z",
+      "source": "playwright",
+      "dir": "pt-br\\cercas-f4"
+    },
+    {
+      "id": 51,
+      "title": "Novas Versões de Firmware - VL08, VL12 e VC07",
+      "path": "notas-de-release-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-08T17:23:52.100Z",
+      "source": "playwright",
+      "dir": "pt-br\\notas-de-release-f4"
+    },
+    {
+      "id": 52,
+      "title": "Entradas e Saídas - VC7",
+      "path": "entradas-saidas-vc7",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-01T12:42:28.395Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vc7"
+    },
+    {
+      "id": 53,
+      "title": "VL12 Padrão",
+      "path": "entradas-saidas-vl12",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-14T12:11:40.764Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vl12"
+    },
+    {
+      "id": 54,
+      "title": "?Integração com periféricos - Configuração da Porta serial",
+      "path": "serial-f4",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-20T16:55:52.370Z",
+      "source": "playwright",
+      "dir": "pt-br\\serial-f4"
+    },
+    {
+      "id": 57,
+      "title": "? Leitura de Pulsos - VL8, VC7 e VL12",
+      "path": "pulsos-f4",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T12:05:50.770Z",
+      "source": "playwright",
+      "dir": "pt-br\\pulsos-f4"
+    },
+    {
+      "id": 60,
+      "title": "VS08",
+      "path": "configsvs",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T17:25:06.585Z",
+      "source": "playwright",
+      "dir": "pt-br\\configsvs"
+    },
+    {
+      "id": 65,
+      "title": "Equipamentos de linha",
+      "path": "firmwares",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-11T13:29:15.082Z",
+      "source": "playwright",
+      "dir": "pt-br\\firmwares"
+    },
+    {
+      "id": 68,
+      "title": "Ações",
+      "path": "acoes-xvm",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-24T13:59:37.518Z",
+      "source": "playwright",
+      "dir": "pt-br\\acoes-xvm"
+    },
+    {
+      "id": 69,
+      "title": "⚙️ Configurações do acelerômetro VL08, VL12, VL15 e VC7",
+      "path": "acelerometro-vl8-vl12-vc7",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-27T19:57:55.248Z",
+      "source": "playwright",
+      "dir": "pt-br\\acelerometro-vl8-vl12-vc7"
+    },
+    {
+      "id": 71,
+      "title": "OneWire VL06",
+      "path": "1-wire-vl6",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T11:58:15.569Z",
+      "source": "playwright",
+      "dir": "pt-br\\1-wire-vl6"
+    },
+    {
+      "id": 73,
+      "title": "?️ Protocolo OneWire – VL08, VC7 e VL12",
+      "path": "1-wire-vl8-vc8-vl12",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-16T11:52:21.671Z",
+      "source": "playwright",
+      "dir": "pt-br\\1-wire-vl8-vc8-vl12"
+    },
+    {
+      "id": 74,
+      "title": "Propriedades de firmware - VCONE",
+      "path": "propriedades-firmware-vcone",
+      "locale": "pt-br",
+      "updatedAt": "2022-03-11T12:39:37.955Z",
+      "source": "playwright",
+      "dir": "pt-br\\propriedades-firmware-vcone"
+    },
+    {
+      "id": 76,
+      "title": "Introdução",
+      "path": "atualizacao-bx-fota",
+      "locale": "pt-br",
+      "updatedAt": "2022-11-10T12:37:47.892Z",
+      "source": "playwright",
+      "dir": "pt-br\\atualizacao-bx-fota"
+    },
+    {
+      "id": 77,
+      "title": "VirCAN",
+      "path": "vircan",
+      "locale": "pt-br",
+      "updatedAt": "2023-03-22T16:58:06.558Z",
+      "source": "playwright",
+      "dir": "pt-br\\vircan"
+    },
+    {
+      "id": 78,
+      "title": "Esquemáticos de Instalação VL06",
+      "path": "configurador-systemsat",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-30T12:42:41.606Z",
+      "source": "playwright",
+      "dir": "pt-br\\configurador-systemsat"
+    },
+    {
+      "id": 84,
+      "title": "Formato da Mensagem",
+      "path": "vl06-guia-homologacao",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-29T11:46:08.340Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl06-guia-homologacao"
+    },
+    {
+      "id": 86,
+      "title": "Política Comercial",
+      "path": "politica-comercial",
+      "locale": "pt-br",
+      "updatedAt": "2022-05-05T12:41:11.284Z",
+      "source": "playwright",
+      "dir": "pt-br\\politica-comercial"
+    },
+    {
+      "id": 88,
+      "title": "Script base VL06 CAN BT",
+      "path": "script-base-padrao",
+      "locale": "pt-br",
+      "updatedAt": "2022-05-10T18:42:22.838Z",
+      "source": "playwright",
+      "dir": "pt-br\\script-base-padrao"
+    },
+    {
+      "id": 90,
+      "title": "? Proteção do Canal de Programação",
+      "path": "f4-protecao-canal",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:34:32.644Z",
+      "source": "playwright",
+      "dir": "pt-br\\f4-protecao-canal"
+    },
+    {
+      "id": 91,
+      "title": "Entradas e Saídas VCONE F4",
+      "path": "entradas-saidas-vcone-108",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-19T15:57:32.739Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-vcone-108"
+    },
+    {
+      "id": 94,
+      "title": "Formato da Mensagem",
+      "path": "vl08-guia-homologacao",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-23T19:50:14.242Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl08-guia-homologacao"
+    },
+    {
+      "id": 97,
+      "title": "Embarcar script",
+      "path": "script",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-19T15:21:53.279Z",
+      "source": "playwright",
+      "dir": "pt-br\\script"
+    },
+    {
+      "id": 98,
+      "title": "Cadastro na Plataforma",
+      "path": "gurtam-wialon",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-23T19:42:02.229Z",
+      "source": "playwright",
+      "dir": "pt-br\\gurtam-wialon"
+    },
+    {
+      "id": 100,
+      "title": "Proteção do Canal de Programação",
+      "path": "vl6-protecao-canal",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T19:08:12.577Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl6-protecao-canal"
+    },
+    {
+      "id": 104,
+      "title": "Tecnologia GSM (2G)",
+      "path": "bandas-vl",
+      "locale": "pt-br",
+      "updatedAt": "2023-06-06T18:12:56.456Z",
+      "source": "playwright",
+      "dir": "pt-br\\bandas-vl"
+    },
+    {
+      "id": 108,
+      "title": "APNs",
+      "path": "configuracoes-conectividade",
+      "locale": "pt-br",
+      "updatedAt": "2022-11-14T17:41:25.181Z",
+      "source": "playwright",
+      "dir": "pt-br\\configuracoes-conectividade"
+    },
+    {
+      "id": 109,
+      "title": "Comandos ATs",
+      "path": "quectel-fc41",
+      "locale": "pt-br",
+      "updatedAt": "2025-03-21T13:04:58.734Z",
+      "source": "playwright",
+      "dir": "pt-br\\quectel-fc41"
+    },
+    {
+      "id": 110,
+      "title": "? Conexões Físicas",
+      "path": "vl6-globalstar",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-29T20:57:21.188Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl6-globalstar"
+    },
+    {
+      "id": 111,
+      "title": "Novo XVM Terminal",
+      "path": "download-novo-xvm-terminal",
+      "locale": "pt-br",
+      "updatedAt": "2023-09-26T11:49:15.364Z",
+      "source": "playwright",
+      "dir": "pt-br\\download-novo-xvm-terminal"
+    },
+    {
+      "id": 112,
+      "title": "? Introdução",
+      "path": "novo-bt-fc41d",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-16T20:13:46.155Z",
+      "source": "playwright",
+      "dir": "pt-br\\novo-bt-fc41d"
+    },
+    {
+      "id": 114,
+      "title": "Introdução",
+      "path": "gfx-via-trm",
+      "locale": "pt-br",
+      "updatedAt": "2023-01-05T18:48:46.901Z",
+      "source": "playwright",
+      "dir": "pt-br\\gfx-via-trm"
+    },
+    {
+      "id": 116,
+      "title": "AG600",
+      "path": "info-anatel",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-28T13:29:48.708Z",
+      "source": "playwright",
+      "dir": "pt-br\\info-anatel"
+    },
+    {
+      "id": 117,
+      "title": "Introdução",
+      "path": "vc7-telas",
+      "locale": "pt-br",
+      "updatedAt": "2025-10-21T17:44:27.350Z",
+      "source": "playwright",
+      "dir": "pt-br\\vc7-telas"
+    },
+    {
+      "id": 118,
+      "title": "Abertura do canal",
+      "path": "fota32",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-09T19:14:03.551Z",
+      "source": "playwright",
+      "dir": "pt-br\\fota32"
+    },
+    {
+      "id": 119,
+      "title": "⚙️ Hardware - VL12",
+      "path": "vl12",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-30T13:34:08.222Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl12"
+    },
+    {
+      "id": 120,
+      "title": "⚙️ Hardware - VIRCOM 07",
+      "path": "vc7",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-30T13:30:16.742Z",
+      "source": "playwright",
+      "dir": "pt-br\\vc7"
+    },
+    {
+      "id": 121,
+      "title": "⚙️ Hardware - VCone 108 (F4)",
+      "path": "vcone108",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-30T13:37:55.187Z",
+      "source": "playwright",
+      "dir": "pt-br\\vcone108"
+    },
+    {
+      "id": 122,
+      "title": "Introdução",
+      "path": "firmware-bx-uart",
+      "locale": "pt-br",
+      "updatedAt": "2023-02-14T19:02:45.389Z",
+      "source": "playwright",
+      "dir": "pt-br\\firmware-bx-uart"
+    },
+    {
+      "id": 123,
+      "title": "Introdução",
+      "path": "atualizacao-fx-fota",
+      "locale": "pt-br",
+      "updatedAt": "2023-10-19T19:18:41.163Z",
+      "source": "playwright",
+      "dir": "pt-br\\atualizacao-fx-fota"
+    },
+    {
+      "id": 129,
+      "title": "Introdução",
+      "path": "alteracoes-vc7-cam-int",
+      "locale": "pt-br",
+      "updatedAt": "2023-08-16T20:07:57.762Z",
+      "source": "playwright",
+      "dir": "pt-br\\alteracoes-vc7-cam-int"
+    },
+    {
+      "id": 132,
+      "title": "Introdução",
+      "path": "jc170",
+      "locale": "pt-br",
+      "updatedAt": "2023-07-31T19:32:35.544Z",
+      "source": "playwright",
+      "dir": "pt-br\\jc170"
+    },
+    {
+      "id": 135,
+      "title": "Introdução - Gateway CAN",
+      "path": "gatewaycan",
+      "locale": "pt-br",
+      "updatedAt": "2024-09-25T14:30:16.652Z",
+      "source": "playwright",
+      "dir": "pt-br\\gatewaycan"
+    },
+    {
+      "id": 137,
+      "title": "Atualização de Firmware",
+      "path": "fw-update-new-xvm",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-23T13:54:49.050Z",
+      "source": "playwright",
+      "dir": "pt-br\\fw-update-new-xvm"
+    },
+    {
+      "id": 138,
+      "title": "Configurações iniciais",
+      "path": "config-pem-clientes",
+      "locale": "pt-br",
+      "updatedAt": "2023-08-16T17:09:36.340Z",
+      "source": "playwright",
+      "dir": "pt-br\\config-pem-clientes"
+    },
+    {
+      "id": 140,
+      "title": "Introdução",
+      "path": "ble-fc41d-data",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:21:19.691Z",
+      "source": "playwright",
+      "dir": "pt-br\\ble-fc41d-data"
+    },
+    {
+      "id": 142,
+      "title": "Apresentação WIKI",
+      "path": "primeiros_passos",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-29T11:38:59.741Z",
+      "source": "playwright",
+      "dir": "pt-br\\primeiros_passos"
+    },
+    {
+      "id": 144,
+      "title": "Montagem dos cabos",
+      "path": "ST-Link",
+      "locale": "pt-br",
+      "updatedAt": "2023-10-07T19:39:32.151Z",
+      "source": "playwright",
+      "dir": "pt-br\\ST-Link"
+    },
+    {
+      "id": 145,
+      "title": "Scripts e Bibliotecas CAN – Linha Virloc",
+      "path": "scripts-e-exemplos",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-29T11:40:12.746Z",
+      "source": "playwright",
+      "dir": "pt-br\\scripts-e-exemplos"
+    },
+    {
+      "id": 147,
+      "title": "Introdução",
+      "path": "gurtam-wialon-delta2",
+      "locale": "pt-br",
+      "updatedAt": "2023-11-21T21:31:17.052Z",
+      "source": "playwright",
+      "dir": "pt-br\\gurtam-wialon-delta2"
+    },
+    {
+      "id": 150,
+      "title": "Aplicações dos Pulsos na Telemetria Veicular:",
+      "path": "definicao-pulsos",
+      "locale": "pt-br",
+      "updatedAt": "2024-03-16T02:06:32.207Z",
+      "source": "playwright",
+      "dir": "pt-br\\definicao-pulsos"
+    },
+    {
+      "id": 151,
+      "title": "Realizar Consultas no IP Terminal",
+      "path": "ip-terminal",
+      "locale": "pt-br",
+      "updatedAt": "2024-03-29T18:11:16.808Z",
+      "source": "playwright",
+      "dir": "pt-br\\ip-terminal"
+    },
+    {
+      "id": 152,
+      "title": "1. Formato da Mensagem",
+      "path": "vl06-guia-homologacao2",
+      "locale": "pt-br",
+      "updatedAt": "2024-09-20T11:05:08.118Z",
+      "source": "playwright",
+      "dir": "pt-br\\vl06-guia-homologacao2"
+    },
+    {
+      "id": 153,
+      "title": "⚙️ Introdução - Código de Falhas (DTCs)",
+      "path": "rede-can-dtcs",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:28:47.082Z",
+      "source": "playwright",
+      "dir": "pt-br\\rede-can-dtcs"
+    },
+    {
+      "id": 156,
+      "title": "Dicionário XVM",
+      "path": "dicionario-xvm",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-17T12:31:57.485Z",
+      "source": "playwright",
+      "dir": "pt-br\\dicionario-xvm"
+    },
+    {
+      "id": 162,
+      "title": "Dicionário de Telemetria",
+      "path": "dicionário-telemetria",
+      "locale": "pt-br",
+      "updatedAt": "2024-09-06T11:48:38.675Z",
+      "source": "playwright",
+      "dir": "pt-br\\dicionário-telemetria"
+    },
+    {
+      "id": 164,
+      "title": "⚙️ Hardware - GATEWAY CAN",
+      "path": "hardware-gatewaycan",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-06T17:55:41.447Z",
+      "source": "playwright",
+      "dir": "pt-br\\hardware-gatewaycan"
+    },
+    {
+      "id": 165,
+      "title": "Propriedades do Firmware Gateway CAN",
+      "path": "propriedades-firmware-gatewaycan",
+      "locale": "pt-br",
+      "updatedAt": "2024-11-05T17:39:41.896Z",
+      "source": "playwright",
+      "dir": "pt-br\\propriedades-firmware-gatewaycan"
+    },
+    {
+      "id": 166,
+      "title": "Entradas e Saídas - Gateway CAN",
+      "path": "entradas-saidas-gatewaycan",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-19T14:02:42.923Z",
+      "source": "playwright",
+      "dir": "pt-br\\entradas-saidas-gatewaycan"
+    },
+    {
+      "id": 167,
+      "title": "Formato de Mensagem",
+      "path": "gatewaycan-guia-homologacao",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-23T13:32:00.384Z",
+      "source": "playwright",
+      "dir": "pt-br\\gatewaycan-guia-homologacao"
+    },
+    {
+      "id": 176,
+      "title": "Bibliotecas CAN",
+      "path": "lib-can",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-24T18:40:59.152Z",
+      "source": "playwright",
+      "dir": "pt-br\\lib-can"
+    },
+    {
+      "id": 177,
+      "title": "Bibliotecas CAN",
+      "path": "lib-can2",
+      "locale": "pt-br",
+      "updatedAt": "2025-01-30T01:29:49.073Z",
+      "source": "playwright",
+      "dir": "pt-br\\lib-can2"
+    },
+    {
+      "id": 182,
+      "title": "Login",
+      "path": "easy",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-12T13:18:13.443Z",
+      "source": "playwright",
+      "dir": "pt-br\\easy"
+    },
+    {
+      "id": 183,
+      "title": "? Guia de Instalação",
+      "path": "AG600-Instalação",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-05T14:54:22.072Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-Instalação"
+    },
+    {
+      "id": 184,
+      "title": "Principais aspectos do barramento CAN (CAN bus)",
+      "path": "rede-can",
+      "locale": "pt-br",
+      "updatedAt": "2025-03-19T11:50:12.372Z",
+      "source": "playwright",
+      "dir": "pt-br\\rede-can"
+    },
+    {
+      "id": 185,
+      "title": "Configuração Básica",
+      "path": "AG600-ConfigBas",
+      "locale": "pt-br",
+      "updatedAt": "2026-03-13T15:29:06.693Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-ConfigBas"
+    },
+    {
+      "id": 186,
+      "title": "Configuração Avançada",
+      "path": "AG600-config-avan",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T16:06:50.373Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-config-avan"
+    },
+    {
+      "id": 187,
+      "title": "Hardware - AG600",
+      "path": "AG600-Hardware",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:41:01.835Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-Hardware"
+    },
+    {
+      "id": 188,
+      "title": "? Consultas",
+      "path": "AG600-Consulta",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-05T14:57:29.527Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-Consulta"
+    },
+    {
+      "id": 189,
+      "title": "DMS",
+      "path": "AG600-DMS",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T16:07:56.869Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600-DMS"
+    },
+    {
+      "id": 190,
+      "title": "? Aplicativo Gateway CAN",
+      "path": "app-gatewaycan",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-13T10:11:08.791Z",
+      "source": "playwright",
+      "dir": "pt-br\\app-gatewaycan"
+    },
+    {
+      "id": 193,
+      "title": "Datasheets",
+      "path": "Data-sheet",
+      "locale": "pt-br",
+      "updatedAt": "2026-05-18T16:25:06.299Z",
+      "source": "playwright",
+      "dir": "pt-br\\Data-sheet"
+    },
+    {
+      "id": 194,
+      "title": "Telas vircom 7 (checklist)",
+      "path": "VC7_Checklist",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:11:58.516Z",
+      "source": "playwright",
+      "dir": "pt-br\\VC7_Checklist"
+    },
+    {
+      "id": 195,
+      "title": "? GatewayCAN + JC450",
+      "path": "integracao-JC",
+      "locale": "pt-br",
+      "updatedAt": "2025-09-30T14:27:42.435Z",
+      "source": "playwright",
+      "dir": "pt-br\\integracao-JC"
+    },
+    {
+      "id": 196,
+      "title": "Embarcar Áudios Personalizados em Equipamentos MDVR/Dashcam",
+      "path": "Audios_MDVR",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T16:09:28.563Z",
+      "source": "playwright",
+      "dir": "pt-br\\Audios_MDVR"
+    },
+    {
+      "id": 197,
+      "title": "Níveis homologados na WIALON",
+      "path": "AG600_Wialon",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-09T19:41:29.675Z",
+      "source": "playwright",
+      "dir": "pt-br\\AG600_Wialon"
+    },
+    {
+      "id": 198,
+      "title": "Atualizar Firmware",
+      "path": "firmware_ag600",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-15T12:01:38.642Z",
+      "source": "playwright",
+      "dir": "pt-br\\firmware_ag600"
+    },
+    {
+      "id": 199,
+      "title": "Níveis homologados na REDGPS",
+      "path": "homologação-REDGPS",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-23T14:59:19.047Z",
+      "source": "playwright",
+      "dir": "pt-br\\homologação-REDGPS"
+    },
+    {
+      "id": 201,
+      "title": "Aplicativo Configurador VL8",
+      "path": "configurador-vl8-instalação",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:11:58.516Z",
+      "source": "playwright",
+      "dir": "pt-br\\configurador-vl8-instalação"
+    },
+    {
+      "id": 202,
+      "title": "Guia de configuração do aplicativo - Parte 1",
+      "path": "Configurador-VL8-Configuração-pt1",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:11:58.516Z",
+      "source": "playwright",
+      "dir": "pt-br\\Configurador-VL8-Configuração-pt1"
+    },
+    {
+      "id": 203,
+      "title": "Guia de configuração do aplicativo - Parte 2",
+      "path": "Configurador-VL8-Configuração-pt2",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-23T14:11:58.516Z",
+      "source": "playwright",
+      "dir": "pt-br\\Configurador-VL8-Configuração-pt2"
+    },
+    {
+      "id": 204,
+      "title": "Níveis homologados na FLESPI",
+      "path": "homologacaoflespi",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-15T19:10:14.300Z",
+      "source": "playwright",
+      "dir": "pt-br\\homologacaoflespi"
+    },
+    {
+      "id": 205,
+      "title": "Identificação de módulos 2G e 4G/2G",
+      "path": "identificação-2g-4g",
+      "locale": "pt-br",
+      "updatedAt": "2025-12-17T17:28:07.895Z",
+      "source": "playwright",
+      "dir": "pt-br\\identificação-2g-4g"
+    },
+    {
+      "id": 206,
+      "title": "? Manual de Usuário - AKCESS BLE",
+      "path": "Aplicativo-Akcess-ble",
+      "locale": "pt-br",
+      "updatedAt": "2026-03-06T18:12:11.918Z",
+      "source": "playwright",
+      "dir": "pt-br\\Aplicativo-Akcess-ble"
+    },
+    {
+      "id": 207,
+      "title": "GATEWAY CAN + Wialon",
+      "path": "Gatewaycan_Homologação_Wialon",
+      "locale": "pt-br",
+      "updatedAt": "2026-01-14T13:36:18.571Z",
+      "source": "playwright",
+      "dir": "pt-br\\Gatewaycan_Homologação_Wialon"
+    },
+    {
+      "id": 208,
+      "title": "Formato da Mensagem",
+      "path": "homologacaossx",
+      "locale": "pt-br",
+      "updatedAt": "2026-02-10T20:14:44.259Z",
+      "source": "playwright",
+      "dir": "pt-br\\homologacaossx"
+    },
+    {
+      "id": 209,
+      "title": "Níveis homologados na YUV",
+      "path": "YUV",
+      "locale": "pt-br",
+      "updatedAt": "2026-03-06T17:53:57.443Z",
+      "source": "playwright",
+      "dir": "pt-br\\YUV"
+    },
+    {
+      "id": 211,
+      "title": "Hardware - M1N",
+      "path": "M1N_Hardware",
+      "locale": "pt-br",
+      "updatedAt": "2026-03-13T14:33:57.601Z",
+      "source": "playwright",
+      "dir": "pt-br\\M1N_Hardware"
+    },
+    {
+      "id": 214,
+      "title": "Configuração Básica",
+      "path": "M1N-ConfigBas",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-17T12:00:10.357Z",
+      "source": "playwright",
+      "dir": "pt-br\\M1N-ConfigBas"
+    },
+    {
+      "id": 215,
+      "title": "?Guia de Instalação",
+      "path": "M1N_Guia_de_Instalação",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-24T18:57:26.534Z",
+      "source": "playwright",
+      "dir": "pt-br\\M1N_Guia_de_Instalação"
+    },
+    {
+      "id": 216,
+      "title": "Configuração Avançada",
+      "path": "m1n-Config-avan",
+      "locale": "pt-br",
+      "updatedAt": "2026-03-18T16:52:06.710Z",
+      "source": "playwright",
+      "dir": "pt-br\\m1n-Config-avan"
+    },
+    {
+      "id": 217,
+      "title": "DMS",
+      "path": "M1N_DMS",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-17T12:00:21.969Z",
+      "source": "playwright",
+      "dir": "pt-br\\M1N_DMS"
+    },
+    {
+      "id": 218,
+      "title": "BSD",
+      "path": "M1N_BSD",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-17T11:58:22.263Z",
+      "source": "playwright",
+      "dir": "pt-br\\M1N_BSD"
+    },
+    {
+      "id": 219,
+      "title": "SMART5 - Preparação do Dispositivo",
+      "path": "SMART5_preparação",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-20T19:01:49.851Z",
+      "source": "playwright",
+      "dir": "pt-br\\SMART5_preparação"
+    },
+    {
+      "id": 220,
+      "title": "Smart5 - Configuração",
+      "path": "Smart5_Configuração",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-20T19:00:40.941Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5_Configuração"
+    },
+    {
+      "id": 221,
+      "title": "Smart5 Ruptela",
+      "path": "Smart5-Entrada_e_Saidas",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-20T16:57:22.645Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5-Entrada_e_Saidas"
+    },
+    {
+      "id": 222,
+      "title": "Instalação no Veiculo",
+      "path": "Smart5-Instalação_no_veiculo",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-20T17:48:43.157Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5-Instalação_no_veiculo"
+    },
+    {
+      "id": 223,
+      "title": "Smart5",
+      "path": "Smart5-Hardware",
+      "locale": "pt-br",
+      "updatedAt": "2026-04-20T18:45:29.640Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5-Hardware"
+    },
+    {
+      "id": 224,
+      "title": "Configurador Smart5",
+      "path": "Configurador_Ruptela_Smart5",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-24T17:34:14.240Z",
+      "source": "playwright",
+      "dir": "pt-br\\Configurador_Ruptela_Smart5"
+    },
+    {
+      "id": 225,
+      "title": "CONFIGURAÇÕES CAN",
+      "path": "Smart5_Rede_CAN",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-03T15:11:42.793Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5_Rede_CAN"
+    },
+    {
+      "id": 226,
+      "title": "Geocercas no Smart5",
+      "path": "Smart5-Cercas",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-16T13:58:52.147Z",
+      "source": "playwright",
+      "dir": "pt-br\\Smart5-Cercas"
+    },
+    {
+      "id": 227,
+      "title": "Reconhecimento Facial",
+      "path": "reconhecimento_facial",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-10T20:24:38.542Z",
+      "source": "playwright",
+      "dir": "pt-br\\reconhecimento_facial"
+    },
+    {
+      "id": 229,
+      "title": "Homologação de Equipamentos ECO5, SMART5 e PRO5LITE",
+      "path": "Guia_homologação_smart5",
+      "locale": "pt-br",
+      "updatedAt": "2026-06-30T19:01:19.640Z",
+      "source": "playwright",
+      "dir": "pt-br\\Guia_homologação_smart5"
+    },
+    {
+      "id": 230,
+      "title": "Entradas e Saídas - ECO5",
+      "path": "Entradas_e_saidas_eco5",
+      "locale": "pt-br",
+      "updatedAt": "2026-07-02T12:08:04.134Z",
+      "source": "playwright",
+      "dir": "pt-br\\Entradas_e_saidas_eco5"
+    },
+    {
+      "id": 231,
+      "title": "ECO5",
+      "path": "hardware_eco5",
+      "locale": "pt-br",
+      "updatedAt": "2026-07-02T12:23:17.932Z",
+      "source": "playwright",
+      "dir": "pt-br\\hardware_eco5"
+    }
+  ],
+  "errors": [
+    {
+      "label": "pt-br/BR61LQ08_Fev22",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/registro-de-ticket",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/boas-vindas",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/USB",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/versoeshardwarevt",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/Procedimento",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/BR61LQ07_Fev22",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/testedemo",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/versoesfirmwareproducao",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/versoespemvt",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/crm-odoo",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/videos_cases_demos",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/firmwareproducao",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/parafusos-vl6-vl8",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/BR61LQ09_Mai22",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/alteracao-mf-vlq14-vl08",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl8-cabos",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/novo-xvm-terminal",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/alteracao-vc07-83-38",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/BR61LQ11_09WDS_set22",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/STLink-montagem-atualizacao",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/cabo-obdll",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/VL8-BR63-20-out22",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/logs-pem",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl6-testes-memoria",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/f4-logicas-exemplo",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/montagem-vl06-can-ins",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/sierra-bx3105",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/config-pem-nt",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/producao-vcone",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/treinamentos-conteudo",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl12-lote-especial",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/sniffer",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/mvp-gw-can",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl8-pem-cable-v4",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl6-micro-colagem",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vc7-pem",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/alteracoes-vcone-109-02",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vc7-cam-int",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vlq-test-points",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/anatel-homologacoes",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/VC7_L86BG_84_43",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/montagem-vl7-70-02",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/USB-CREARE",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vl70_02_06_2024",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/gateway-can",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/criptografia-clib",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/Limpeza-de-SN",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/SVA-CREARE",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/vot-out1-telefonica",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/SVA-PAE",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/alteração_L485_F091",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/montagem_vl12_full",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/anotacoes-engenharia",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/instrucoes_de_trabalho",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/teste-vcone-sem-pem",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/Configurador-VL8",
+      "error": "403 - nao autorizado"
+    },
+    {
+      "label": "pt-br/AG600_ADAS",
+      "error": "403 - nao autorizado"
+    }
+  ]
+}

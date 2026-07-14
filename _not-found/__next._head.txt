@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/mock01-agro/_next/static/chunks/2mx3vqhmb20z5.js","/mock01-agro/_next/static/chunks/1p21yw3n3oxnm.js"],"ViewportBoundary"]
+3:I[97367,["/mock01-agro/_next/static/chunks/2mx3vqhmb20z5.js","/mock01-agro/_next/static/chunks/1p21yw3n3oxnm.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/mock01-agro/_next/static/chunks/2mx3vqhmb20z5.js","/mock01-agro/_next/static/chunks/1p21yw3n3oxnm.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Agro Telemetria | Sistema de Monitoramento"}],["$","meta","1",{"name":"description","content":"Plataforma SaaS para monitoramento de máquinas agrícolas em tempo real"}],["$","link","2",{"rel":"icon","href":"/mock01-agro/icon.jpg?icon.21pmwnql18cr6.jpg","sizes":"1024x1024","type":"image/jpeg"}],["$","$L5","3",{}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"J8BtD3xpWs0cpY66KyuIu"}
