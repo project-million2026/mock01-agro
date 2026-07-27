@@ -1,5 +1,5 @@
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -7,18 +7,6 @@ const nextConfig = {
     ],
   },
   turbopack: {},
-  async rewrites() {
-    // Proxy /api/* pro backend Python. BACKEND_URL é resolvido em build time (rewrites do Next
-    // são baked no manifest): em dev, default localhost; no container de prod, o Dockerfile fixa
-    // http://api:8000 (nome do serviço na rede do docker-compose). O browser só fala com o front.
-    const backend = process.env.BACKEND_URL || 'http://127.0.0.1:8000'
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${backend}/api/:path*`,
-      },
-    ]
-  },
   webpack(config, { dev }) {
     if (dev) {
       // Reduce CPU/memory from file watching
@@ -33,20 +21,6 @@ const nextConfig = {
   onDemandEntries: {
     maxInactiveAge: 10000,
     pagesBufferLength: 2,
-  },
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Frame-Options", value: "ALLOWALL" },
-          { key: "Content-Security-Policy", value: "frame-ancestors *;" },
-          { key: "Access-Control-Allow-Origin", value: process.env.CORS_ORIGINS || "*" },
-          { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
-          { key: "Access-Control-Allow-Headers", value: "*" },
-        ],
-      },
-    ];
   },
 };
 
