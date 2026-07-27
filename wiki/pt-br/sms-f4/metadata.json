@@ -1,0 +1,8 @@
+{
+  "title": "Envio de Comandos via SMS",
+  "path": "sms-f4",
+  "locale": "pt-br",
+  "contentType": "html",
+  "source": "playwright",
+  "updatedAt": "2025-11-27T13:53:56.677Z"
+}
