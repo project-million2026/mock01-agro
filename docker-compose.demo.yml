@@ -1,8 +1,0 @@
-# Overlay de DEMO local: remapeia a porta do Postgres para não colidir com os containers de teste
-# (agro_test_pg já ocupa a 5432 do host). Os serviços falam entre si pela rede interna do compose,
-# então a publicação no host é só para debug/túnel. Uso:
-#   docker compose -f docker-compose.prod.yml -f docker-compose.demo.yml up -d
-services:
-  postgres:
-    ports: !override
-      - "127.0.0.1:5544:5432"

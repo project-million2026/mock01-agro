@@ -1,7 +1,0 @@
-# Coloque aqui os certificados TLS de produção (não commitados):
-#   fullchain.pem  (cadeia completa)
-#   privkey.pem    (chave privada)
-# Ex.: via certbot (Let's Encrypt):
-#   certbot certonly --standalone -d seu-dominio.com
-#   cp /etc/letsencrypt/live/seu-dominio.com/{fullchain,privkey}.pem ./certs/
-# Depois habilite o bloco `server { listen 443 ssl; ... }` no nginx.conf e recarregue o proxy.
