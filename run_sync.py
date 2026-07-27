@@ -1,0 +1,11 @@
+import paramiko
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect('192.168.0.15', username='ti', password='#Phgs@7495$', timeout=15)
+sftp = client.open_sftp()
+sftp.put('C:\\Users\\User\\Documents\\Pedro\\Pessoal\\Project\\Project-Agro-main\\python-backend\\sync_flespi.py', '/tmp/sync_flespi.py')
+sftp.close()
+stdin, stdout, stderr = client.exec_command("echo '#Phgs@7495$' | sudo -S docker cp /tmp/sync_flespi.py agro_api:/app/sync_flespi.py && echo '#Phgs@7495$' | sudo -S docker exec agro_api python /app/sync_flespi.py")
+print(stdout.read().decode())
+print(stderr.read().decode())
+client.close()

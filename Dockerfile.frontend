@@ -1,0 +1,36 @@
+# Frontend Next.js (App Router) — serve o dashboard e proxia /api/* pro backend Python
+# (rewrite em next.config.js). Multi-stage: instala deps, builda, e roda só o output
+# `standalone` (imagem enxuta, sem node_modules de build). O browser só fala com o frontend.
+
+FROM node:22-alpine AS deps
+WORKDIR /app
+RUN corepack enable
+COPY package.json package-lock.json* ./
+RUN npm install
+
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+# Destino do proxy /api/* é resolvido em build time (rewrites do Next são baked no manifest).
+# Na rede do docker-compose o backend é o serviço 'api'. Sobrescreva com --build-arg se preciso.
+ARG BACKEND_URL=http://api:8000
+ENV BACKEND_URL=$BACKEND_URL
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+# Usuário não-root
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+# Output standalone: server.js + node_modules mínimos + assets estáticos + public.
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+USER nextjs
+EXPOSE 3000
+CMD ["node", "server.js"]

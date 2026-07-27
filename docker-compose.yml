@@ -1,0 +1,50 @@
+services:
+  # TimescaleDB + PostGIS (séries temporais + geofencing) — imagem unificada
+  postgres:
+    image: timescale/timescaledb-ha:pg16
+    container_name: agro_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-agro_telemetry}
+      POSTGRES_USER: ${POSTGRES_USER:-agro_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-agro_password_123}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # Redis (Para cache e fila de processamento assíncrono)
+  redis:
+    image: redis:7-alpine
+    container_name: agro_redis
+    volumes:
+      - redisdata:/data
+    restart: unless-stopped
+
+  # Backend em Python (FastAPI) — DESENVOLVIMENTO
+  # Segredos vêm do .env (NUNCA commitar). Para produção use docker-compose.prod.yml.
+  backend:
+    build:
+      context: ./python-backend
+      dockerfile: Dockerfile
+    container_name: agro_python_api
+    depends_on:
+      - postgres
+      - redis
+    # .env é opcional (ausente no CI; presente em dev). Evita falha do 'docker compose config' no CI.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-agro_admin}:${POSTGRES_PASSWORD:-agro_password_123}@postgres:5432/${POSTGRES_DB:-agro_telemetry}
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    # Em desenvolvimento, mapeamos a pasta para live-reload
+    volumes:
+      - ./python-backend:/app
+
+volumes:
+  pgdata:
+  redisdata:

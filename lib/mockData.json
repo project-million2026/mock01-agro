@@ -1,0 +1,126 @@
+{
+  "stats": {
+    "machines": 6,
+    "operators": 5,
+    "farms": 3,
+    "fields": 5,
+    "buildings": 4,
+    "online": 0,
+    "offline": 6,
+    "events24h": 12450,
+    "queue": { "pending": 0, "dead": 0 }
+  },
+  "positions": {
+    "positions": [
+      {
+        "fleetNumber": "TR-001",
+        "latitude": -10.1820,
+        "longitude": -48.3320,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 85.0,
+        "updatedAt": "2026-07-10T10:00:00Z"
+      },
+      {
+        "fleetNumber": "TR-002",
+        "latitude": -10.1830,
+        "longitude": -48.3330,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 45.0,
+        "updatedAt": "2026-07-10T10:32:00Z"
+      },
+      {
+        "fleetNumber": "TR-003",
+        "latitude": -10.1840,
+        "longitude": -48.3340,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 65.0,
+        "updatedAt": "2026-07-10T11:33:00Z"
+      },
+      {
+        "fleetNumber": "TR-004",
+        "latitude": -10.1860,
+        "longitude": -48.3360,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 92.0,
+        "updatedAt": "2026-07-10T12:31:00Z"
+      },
+      {
+        "fleetNumber": "TR-005",
+        "latitude": -10.1870,
+        "longitude": -48.3370,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 12.0,
+        "updatedAt": "2026-07-10T13:00:00Z"
+      },
+      {
+        "fleetNumber": "TR-006",
+        "latitude": -10.1880,
+        "longitude": -48.3380,
+        "speed": 0,
+        "engineRpm": 0,
+        "fuelLevel": 5.0,
+        "updatedAt": "2026-07-10T14:00:00Z"
+      }
+    ],
+    "farms": [
+      { "id": 1, "name": "Fazenda Palmas", "latitude": -10.18, "longitude": -48.33, "total_area": 1500 }
+    ],
+    "fields": [
+      { "id": 1, "name": "Talhão Central", "farm_id": 1, "area": 300, "polygon": [[-10.180, -48.330], [-10.180, -48.340], [-10.190, -48.340], [-10.190, -48.330]] }
+    ],
+    "buildings": [
+      { "id": 1, "name": "Sede Palmas", "farm_id": 1, "latitude": -10.1850, "longitude": -48.3350 }
+    ]
+  },
+  "eventsTimeline": {
+    "buckets": [
+      { "hour": "00:00", "count": 120 },
+      { "hour": "04:00", "count": 50 },
+      { "hour": "08:00", "count": 800 },
+      { "hour": "12:00", "count": 1200 },
+      { "hour": "16:00", "count": 1500 },
+      { "hour": "20:00", "count": 300 }
+    ]
+  },
+  "recentEvents": {
+    "events": [
+      { "fleetNumber": "TR-001", "deviceId": "VC07-991", "operatorRFID": "04:55:A1:B2", "speed": 0, "engineRpm": 0, "fuelLevel": 85.0, "latitude": -10.1820, "longitude": -48.3320, "receivedAt": "2026-07-10T10:00:00Z" },
+      { "fleetNumber": "TR-003", "deviceId": "VL08-442", "operatorRFID": "04:55:C3:D4", "speed": 0, "engineRpm": 0, "fuelLevel": 65.0, "latitude": -10.1840, "longitude": -48.3340, "receivedAt": "2026-07-10T11:33:00Z" }
+    ]
+  },
+  "users": [
+    { "id": 1, "name": "Administrador", "email": "admin@telemetria.com", "role": "admin" },
+    { "id": 2, "name": "Gestor de Frota", "email": "gestor@telemetria.com", "role": "manager" },
+    { "id": 3, "name": "Operador Painel", "email": "operador@telemetria.com", "role": "operator" }
+  ],
+  "fleets": [
+    { "id": 1, "number": "TR-001", "type": "Trator", "device_id": 1 },
+    { "id": 2, "number": "TR-002", "type": "Colheitadeira", "device_id": 2 },
+    { "id": 3, "number": "TR-003", "type": "Trator", "device_id": 3 },
+    { "id": 4, "number": "TR-004", "type": "Pulverizador", "device_id": 4 },
+    { "id": 5, "number": "TR-005", "type": "Trator", "device_id": 5 },
+    { "id": 6, "number": "TR-006", "type": "Caminhão", "device_id": 6 }
+  ],
+  "operators": [
+    { "id": 1, "name": "João Silva", "rfid_card": "04:55:A1:B2" },
+    { "id": 2, "name": "Carlos Souza", "rfid_card": "04:55:C3:D4" }
+  ],
+  "farms": [
+    { "id": 1, "name": "Fazenda Palmas", "latitude": -10.18, "longitude": -48.33, "total_area": 1500 }
+  ],
+  "fields": [
+    { "id": 1, "name": "Talhão Central", "farm_id": 1, "area": 300, "polygon": [[-10.180, -48.330], [-10.180, -48.340], [-10.190, -48.340], [-10.190, -48.330]] }
+  ],
+  "buildings": [
+    { "id": 1, "name": "Sede Palmas", "farm_id": 1, "latitude": -10.1850, "longitude": -48.3350 }
+  ],
+  "devices": [
+    { "id": 1, "ident": "VC07-991", "type": "Newtec VC07" },
+    { "id": 2, "ident": "VL08-442", "type": "Newtec VL08" }
+  ]
+}
