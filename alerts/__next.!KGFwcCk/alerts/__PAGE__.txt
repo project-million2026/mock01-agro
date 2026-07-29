@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
 2:I[47257,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js"],"ClientPageRoot"]
-3:I[84317,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js","/mock01-agro/_next/static/chunks/2aszhe88f0l0o.js","/mock01-agro/_next/static/chunks/04_ms51nb0i4h.js","/mock01-agro/_next/static/chunks/3yx-4urspum6g.js","/mock01-agro/_next/static/chunks/30pbesn--iu46.js"],"default"]
+3:I[84317,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js","/mock01-agro/_next/static/chunks/3yx-4urspum6g.js","/mock01-agro/_next/static/chunks/04_ms51nb0i4h.js","/mock01-agro/_next/static/chunks/3bnu-apgv673d.js","/mock01-agro/_next/static/chunks/3yk588en73u58.js"],"default"]
 6:I[97367,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/mock01-agro/_next/static/chunks/30pbesn--iu46.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"cbxMzBHShbIGfsZSR09Pt"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/mock01-agro/_next/static/chunks/3yk588en73u58.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"nzukRGnmV8m0sS81ZBoqh"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
