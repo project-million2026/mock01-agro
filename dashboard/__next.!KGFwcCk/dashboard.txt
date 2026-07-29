@@ -2,4 +2,4 @@
 2:I[39756,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js"],"default"]
 3:I[37457,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"18IwPvi_JeHlhy4T5J-Pl"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"NKRSk2j0FRAQqNLKuF7VS"}
