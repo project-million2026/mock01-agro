@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
 3:I[97367,["/mock01-agro/_next/static/chunks/2lqw98e0hioct.js","/mock01-agro/_next/static/chunks/2sd4lalruoi4v.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":["$L2",null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"xk8O3bmTrE4X4chW4hpE4"}
+0:{"rsc":["$","$1","c",{"children":["$L2",null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"18IwPvi_JeHlhy4T5J-Pl"}
 5:null
 2:E{"digest":"NEXT_REDIRECT;replace;/dashboard;307;"}

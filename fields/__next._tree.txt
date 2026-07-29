@@ -1,4 +1,4 @@
-:HL["/mock01-agro/_next/static/chunks/3wr-xt1vsvuda.css","style"]
+:HL["/mock01-agro/_next/static/chunks/3h-7f0w2v8oc3.css","style"]
 :HL["https://unpkg.com/leaflet@1.9.4/dist/leaflet.css","style",{"crossOrigin":"","integrity":"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="}]
 :HL["https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":24,"slots":{"children":{"name":"(app)","param":null,"prefetchHints":4,"slots":{"children":{"name":"fields","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"xk8O3bmTrE4X4chW4hpE4"}
+0:{"tree":{"name":"","param":null,"prefetchHints":24,"slots":{"children":{"name":"(app)","param":null,"prefetchHints":4,"slots":{"children":{"name":"fields","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"18IwPvi_JeHlhy4T5J-Pl"}
