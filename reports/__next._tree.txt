@@ -1,4 +1,4 @@
 :HL["/mock01-agro/_next/static/chunks/3wr-xt1vsvuda.css","style"]
 :HL["https://unpkg.com/leaflet@1.9.4/dist/leaflet.css","style",{"crossOrigin":"","integrity":"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="}]
 :HL["https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":24,"slots":{"children":{"name":"(app)","param":null,"prefetchHints":4,"slots":{"children":{"name":"reports","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"nzukRGnmV8m0sS81ZBoqh"}
+0:{"tree":{"name":"","param":null,"prefetchHints":24,"slots":{"children":{"name":"(app)","param":null,"prefetchHints":4,"slots":{"children":{"name":"reports","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"GBFxK0GtpVN6c-zfMmrZW"}
